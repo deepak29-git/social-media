@@ -51,7 +51,7 @@ export const SignIn = () => {
       });
       localStorage.setItem("token", data.encodedToken);
       setIsAuth(true);
-      navigate("/home");
+      navigate("/");
       toast({
         title: "Logged In Successfully.",
         status: "success",
