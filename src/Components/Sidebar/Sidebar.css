@@ -1,0 +1,14 @@
+.list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.list-container {
+  border-right: 1px solid var(--grey-color);
+  width: 250px;
+  position: fixed;
+  margin-left: 2rem;
+}
