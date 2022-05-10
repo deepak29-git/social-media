@@ -66,8 +66,10 @@ export const signupHandler = function (schema, request) {
 
 export const loginHandler = function (schema, request) {
   const { username, password } = JSON.parse(request.requestBody);
+  console.log(username,password)
   try {
     const foundUser = schema.users.findBy({ username: username });
+    console.log(foundUser,"founduser")
     if (!foundUser) {
       return new Response(
         404,
