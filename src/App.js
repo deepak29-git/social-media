@@ -1,13 +1,7 @@
 import "./App.css";
-import { Navbar } from "./Components/Navbar/Navbar";
-import { Home } from "./Pages/Home/Home";
-import { SignIn } from "./Pages/Signin/Signin";
+import {Navbar,SignIn,Signup,Home,PageNotFound,Bookmark} from './import'
 import { Routes, Route } from "react-router-dom";
-import { Signup } from "./Pages/Signup/Signup";
-import { useAuth } from "./Context/auth-context";
-import { PageNotFound } from "./Pages/PageNotFound/PageNotFound";
-import { Bookmark } from "./Pages/Bookmark/Bookmark";
-
+import {useAuth} from './Context/auth-context'
 function App() {
   const { isAuth } = useAuth();
   return (

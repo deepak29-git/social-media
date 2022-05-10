@@ -1,7 +1,6 @@
 import "../Navbar/Navbar.css";
 import { Button, Box, Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import "../Navbar/Navbar.css";
 import { useAuth } from "../../Context/auth-context";
 
 export const Navbar = () => {

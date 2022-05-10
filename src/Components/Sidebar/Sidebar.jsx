@@ -8,15 +8,18 @@ import {
   extendTheme,
   useDisclosure,
 } from "@chakra-ui/react";
-import { AiOutlineHome, AiOutlineMessage } from "react-icons/ai";
-import { MdOutlineExplore } from "react-icons/md";
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { BsBookmark, BsCardList } from "react-icons/bs";
-import { CgProfile } from "react-icons/cg";
-import { FiMoreHorizontal } from "react-icons/fi";
 
 import "../Sidebar/Sidebar.css";
-
+import {
+  AiOutlineHome,
+  AiOutlineMessage,
+  MdOutlineExplore,
+  IoIosNotificationsOutline,
+  BsBookmark,
+  BsCardList,
+  CgProfile,
+  FiMoreHorizontal,
+} from "../import-icon";
 import { PostModal } from "../PostModal/PostModal";
 import { NavLink } from "react-router-dom";
 export const Sidebar = () => {
@@ -43,10 +46,10 @@ export const Sidebar = () => {
       <List className="list-container">
         <UnorderedList className="unordered-list">
           <NavLink to="/">
-          <ListItem className="list-item">
-            <Icon as={AiOutlineHome} w={6} h={6} />
-            <Heading size="md">Home</Heading>
-          </ListItem>
+            <ListItem className="list-item">
+              <Icon as={AiOutlineHome} w={6} h={6} />
+              <Heading size="md">Home</Heading>
+            </ListItem>
           </NavLink>
 
           <ListItem className="list-item">

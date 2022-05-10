@@ -10,12 +10,12 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import { createPostApi, editPostApi } from "../../all-api/post-api";
+import { useRef } from "react";
+import { editPostApi } from "../../all-api/post-api";
 import { usePost } from "../../Context/post-context";
 export const EditPostModal = ({ isOpen, onClose }) => {
   const { postDispatch, postState } = usePost();
-  const { createPost, id, content, editInput } = postState;
+  const { id, editInput } = postState;
   const initialRef = useRef();
   const finalRef = useRef();
 
