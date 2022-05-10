@@ -8,7 +8,8 @@ const PostProvider = ({ children }) => {
     createPost: [],
     id:"",
     content:"",
-    editInput:""
+    editInput:"",
+    bookmarkPost:[]
   });
 
   return (

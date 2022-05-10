@@ -18,6 +18,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import "../Sidebar/Sidebar.css";
 
 import { PostModal } from "../PostModal/PostModal";
+import { NavLink } from "react-router-dom";
 export const Sidebar = () => {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -41,10 +42,12 @@ export const Sidebar = () => {
       <PostModal onClose={onClose} isOpen={isOpen} />
       <List className="list-container">
         <UnorderedList className="unordered-list">
+          <NavLink to="/">
           <ListItem className="list-item">
             <Icon as={AiOutlineHome} w={6} h={6} />
             <Heading size="md">Home</Heading>
           </ListItem>
+          </NavLink>
 
           <ListItem className="list-item">
             <Icon as={MdOutlineExplore} w={6} h={6} />
@@ -61,10 +64,12 @@ export const Sidebar = () => {
             <Heading size="md">Message</Heading>
           </ListItem>
 
-          <ListItem className="list-item">
-            <Icon as={BsBookmark} w={6} h={6} />
-            <Heading size="md">Bookmarks</Heading>
-          </ListItem>
+          <NavLink to="/bookmark">
+            <ListItem className="list-item">
+              <Icon as={BsBookmark} w={6} h={6} />
+              <Heading size="md">Bookmarks</Heading>
+            </ListItem>
+          </NavLink>
 
           <ListItem className="list-item">
             <Icon as={BsCardList} w={6} h={6} />

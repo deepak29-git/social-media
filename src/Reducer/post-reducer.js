@@ -16,6 +16,12 @@ export const postReducer = (state, action) => {
       return { ...state, createPost: action.payload };
     case "DISLIKE_POST":
       return { ...state, createPost: action.payload };
+    case "BOOKMARK_POST":
+      return { ...state, bookmarkPost: action.payload };
+    case "REMOVE_BOOKMARK_POST":
+      return { ...state, bookmarkPost: action.payload };
+    case "GET_BOOKMARK":
+      return { ...state, bookmarkPost: action.payload };
     default:
       return state;
   }
