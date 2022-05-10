@@ -1,0 +1,37 @@
+.post-container {
+  grid-column: 2 / 3;
+  border-radius: 10px;
+  height: max-content;
+  background-color: var(--white-color);
+  margin-top: 7rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  grid-gap: 40px;
+
+}
+
+.right-sidebar-container {
+  border-radius: 10px;
+  height: 250px;
+  width: 300px;
+  position: fixed;
+  right: 0;
+  margin-top: 7rem;
+  background-color: var(--white-color);
+}
+
+.post-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.post-icon {
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.post-icon:hover {
+  background-color: var(--grey-light);
+}

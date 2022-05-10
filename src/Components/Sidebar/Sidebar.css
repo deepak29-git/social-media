@@ -7,8 +7,12 @@
 }
 
 .list-container {
-  border-right: 1px solid var(--grey-color);
-  width: 250px;
+  background-color: var(--white-color);
   position: fixed;
+  width: 280px;
+  padding: 2rem;
+  grid-column: 1 / 2;
+  border-radius: 5px;
   margin-left: 2rem;
+  margin-top: 7rem;
 }
