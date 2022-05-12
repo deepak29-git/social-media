@@ -17,14 +17,16 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { usePost } from "../../Context/post-context";
+import { EditPostModal } from "../PostModal/EditPostModal";
 
 export const PostCard = ({ post }) => {
   const { postDispatch, postState } = usePost();
   const { bookmarkPost } = postState;
-  const { onOpen } = useDisclosure();
+  const {onClose,isOpen, onOpen } = useDisclosure();
   const { _id, content, likes } = post;
   return (
     <Box className="post-container">
+       <EditPostModal onClose={onClose} isOpen={isOpen} />
       <Box className="post-content" p={4}>
         <Box as="h4">UserName</Box>
         <Menu>

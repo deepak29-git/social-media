@@ -10,7 +10,6 @@
   display: grid;
   grid-template-columns: 300px 1fr 300px;
   grid-gap: 40px;
-
 }
 
 .right-sidebar-container {

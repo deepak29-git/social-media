@@ -69,7 +69,6 @@ export const editUserHandler = function (schema, request) {
     );
   }
 };
-
 /**
  * This handler gets all the user bookmarks from the db.
  * send GET Request at /api/users/bookmark/
