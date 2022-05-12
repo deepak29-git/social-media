@@ -9,7 +9,6 @@ export const Profile = () => {
   const { userState, userDispatch } = useUser();
   const { users } = userState;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const [userId,setUserId]=useState()
 
   useEffect(() => {
     getAllUser(userDispatch);

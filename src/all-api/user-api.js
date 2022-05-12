@@ -21,7 +21,6 @@ const getUser = async (id, userDispatch) => {
 
 const editProfileApi = async (userData, userDispatch) => {
   const { _id, firstName, lastName, userName, bio } = userData;
-  console.log(firstName, "from frontend");
   try {
     const { data } = await axios({
       method: "POST",
@@ -35,7 +34,6 @@ const editProfileApi = async (userData, userDispatch) => {
       headers: { authorization: getToken() },
     });
     console.log(data.user, "from edit api");
-    // userDispatch({ type: "EDIT_USER", payload: data.users});
   } catch (error) {
     console.log(error);
   }
