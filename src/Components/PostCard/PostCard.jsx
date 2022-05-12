@@ -2,6 +2,7 @@ import "../../Pages/Home/Home.css";
 import { BsThreeDots } from "react-icons/bs";
 import { deletePostApi } from "../../all-api/post-api";
 import { dislikePostApi, likePostApi } from "../../all-api/like-dislike-post";
+import {CommentModal} from '../CommentModal/CommentModal'
 import {
   addToBookmarkApi,
   removePostFromBookmarkApi,
@@ -27,6 +28,7 @@ export const PostCard = ({ post }) => {
   return (
     <Box className="post-container">
        <EditPostModal onClose={onClose} isOpen={isOpen} />
+       <CommentModal onClose={onClose} isOpen={isOpen}/>
       <Box className="post-content" p={4}>
         <Box as="h4">UserName</Box>
         <Menu>
@@ -86,6 +88,10 @@ export const PostCard = ({ post }) => {
           alignItems="center"
           gap="1"
           cursor="pointer"
+          onClick={()=>{
+            onOpen()
+            postDispatch({ type: "ID", payload: _id });
+          }}
         >
           <Box className="material-icons-outlined">comment </Box>
           <Box as="span">Comment</Box>

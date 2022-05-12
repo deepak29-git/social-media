@@ -24,6 +24,8 @@ export const postReducer = (state, action) => {
       return { ...state, bookmarkPost: action.payload };
     case "GET_BOOKMARK":
       return { ...state, bookmarkPost: action.payload };
+      case "COMMENT_INPUT":
+        return { ...state, commentInput: action.payload };
     default:
       return state;
   }
