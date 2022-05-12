@@ -6,17 +6,21 @@ import { formatDate } from "../utils/authUtils";
  * */
 
 export const users = [
+  // {
+  //   _id: uuid(),
+  //   firstName: "Adarsh",
+  //   lastName: "Balika",
+  //   username: "adarshbalika",
+  //   password: "adarshBalika123",
+  //   createdAt: formatDate(),
+  //   updatedAt: formatDate(),
+  // },
   {
     _id: uuid(),
-    firstName: "Adarsh",
-    lastName: "Balika",
-    username: "adarshbalika",
-    password: "adarshBalika123",
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
-  {
-    _id: uuid(),  
+    firstName: "Deepak",
+    lastName: "Goyal",
+    userName:"deepak_1996",
+    bio:"aspring full stack develper",
     email: "deepak123@gmail.com",
     password: "deepak123",
     createdAt: formatDate(),

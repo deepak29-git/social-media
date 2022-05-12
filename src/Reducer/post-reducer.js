@@ -1,5 +1,7 @@
 export const postReducer = (state, action) => {
   switch (action.type) {
+    case "GET_POST":
+      return { ...state, createPost: action.payload };
     case "CREATE_POST":
       return { ...state, createPost: action.payload };
     case "EDIT_POST":

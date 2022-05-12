@@ -78,11 +78,12 @@ export const Sidebar = () => {
             <Icon as={BsCardList} w={6} h={6} />
             <Heading size="md">Lists</Heading>
           </ListItem>
-
+          <NavLink to="/profile">
           <ListItem className="list-item">
             <Icon as={CgProfile} w={6} h={6} />
             <Heading size="md">Profile</Heading>
           </ListItem>
+          </NavLink>
 
           <ListItem className="list-item">
             <Icon as={FiMoreHorizontal} w={6} h={6} />

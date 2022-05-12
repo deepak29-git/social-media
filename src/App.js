@@ -1,7 +1,8 @@
 import "./App.css";
-import {Navbar,SignIn,Signup,Home,PageNotFound,Bookmark} from './import'
+import {Navbar,SignIn,Signup,Home,PageNotFound,Bookmark,Profile} from './import'
 import { Routes, Route } from "react-router-dom";
 import {useAuth} from './Context/auth-context'
+
 function App() {
   const { isAuth } = useAuth();
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<PageNotFound/>}/>
         <Route path="/bookmark" element={<Bookmark/>}/>
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
     </div>
   );

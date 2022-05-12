@@ -40,6 +40,7 @@ export const EditPostModal = ({ isOpen, onClose }) => {
               onChange={(e) => editChangeHandler(e)}
               ref={initialRef}
               placeholder="What do you want to talk about?"
+              value={editInput}
             />
           </FormControl>
         </ModalBody>
