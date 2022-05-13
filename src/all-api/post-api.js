@@ -26,7 +26,6 @@ const createPostApi = async (postDispatch, post) => {
 };
 
 const editPostApi = async (postDispatch, _id, postData) => {
-  console.log(postDispatch, "dispatch", _id, "id", postData, "input");
   try {
     const { data } = await axios.post(
       `/api/posts/edit/${_id}`,
