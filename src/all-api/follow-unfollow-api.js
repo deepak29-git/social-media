@@ -9,7 +9,6 @@ const followUserApi = async (followUserId, userDispatch) => {
       data: {},
       headers: { authorization: getToken() },
     });
-    console.log(data.user)
     userDispatch({ type: "FOLLOW_USER", payload: data.user });
   } catch (error) {
     console.log(error);
