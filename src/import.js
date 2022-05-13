@@ -7,3 +7,5 @@ export { useAuth } from "./Context/auth-context";
 export { PageNotFound } from "./Pages/PageNotFound/PageNotFound";
 export { Bookmark } from "./Pages/Bookmark/Bookmark";
 export { Profile } from "./Pages/Profile/Profile";
+export { Following } from "./Pages/Following/Following";
+export { Followers } from "./Pages/Followers/Followers";

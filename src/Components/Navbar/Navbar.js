@@ -11,7 +11,7 @@ export const Navbar = () => {
         <Box>
           <Link to="/">
             <Heading color="teal" as="h1" size="2xl" isTruncated>
-              ClinchIn
+              Talkmedia
             </Heading>
           </Link>
         </Box>

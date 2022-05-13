@@ -19,9 +19,11 @@ export const Home = () => {
   return (
     <Box className="grid-container">
       <Sidebar />
+      <Box mt={110} gridColumn="2 / 3" gridGap={10}>
       {createPost.map((post) => (
         <PostCard key={post._id} post={post} />
-      ))}
+        ))}
+        </Box>
       <UserProfile />
     </Box>
   );

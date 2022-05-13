@@ -6,7 +6,8 @@ const UserContext = createContext(null);
 const UserProvider = ({ children }) => {
   const [userState, userDispatch] = useReducer(userReducer, {
     users: [],
-    user:{}
+    user:{},
+    followUser:{}
   });
 
   return (
