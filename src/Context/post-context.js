@@ -10,7 +10,8 @@ const PostProvider = ({ children }) => {
     content:"",
     editInput:"",
     bookmarkPost:[],
-    commentInput:""
+    commentInput:{},
+    
   });
 
   return (

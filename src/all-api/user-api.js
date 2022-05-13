@@ -14,6 +14,7 @@ const getUser = async (id, userDispatch) => {
   try {
     const { data } = await axios.get(`/api/users/${id}`);
     userDispatch({ type: "GET_USER", payload: data.user });
+    console.log(data,"from getuser")
   } catch (error) {
     console.log(error);
   }

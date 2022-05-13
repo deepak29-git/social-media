@@ -29,7 +29,7 @@ export const PostCard = ({ post }) => {
     <Box className="post-container">
        <EditPostModal onClose={onClose} isOpen={isOpen} />
        <CommentModal onClose={onClose} isOpen={isOpen}/>
-      <Box className="post-content" p={4}>
+      <Box className="post-content" p={4} >
         <Box as="h4">UserName</Box>
         <Menu>
           <MenuButton

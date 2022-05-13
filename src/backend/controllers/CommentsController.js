@@ -49,11 +49,9 @@ export const addPostCommentHandler = function (schema, request) {
     const { postId } = request.params;
     const { commentData } = JSON.parse(request.requestBody);
 
-    console.log(commentData,"from backend")
     const comment = {
       _id: uuid(),
-      // addCommment:commentData,
-      ...commentData,
+      addCommment:commentData,
       username: user.username,
       votes: { upvotedBy: [], downvotedBy: [] },
       createdAt: formatDate(),
