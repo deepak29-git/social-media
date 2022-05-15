@@ -11,13 +11,15 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { addCommentApi } from "../../all-api/comment-api";
+import { useAuth } from "../../Context/auth-context";
 import { usePost } from "../../Context/post-context";
 
-export const CommentModal = ({ isOpen, onClose }) => {
+export const CommentModal = ({ isOpen, onClose,setComments }) => {
   const {
     postDispatch,
-    postState: { commentInput, id },
+    postState: { commentInput,id },
   } = usePost();
+  const {user}=useAuth()
 
   return (
     <>
@@ -43,7 +45,10 @@ export const CommentModal = ({ isOpen, onClose }) => {
 
           <ModalFooter>
             <Button
-              onClick={() => addCommentApi(id, commentInput)}
+              onClick={() => {
+                addCommentApi(id, commentInput,user,setComments)
+                onClose()
+              }}
               colorScheme="teal"
               mr={3}
             >

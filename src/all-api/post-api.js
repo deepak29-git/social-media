@@ -30,7 +30,7 @@ const editPostApi = async (postDispatch, _id, postData) => {
     const { data } = await axios.post(
       `/api/posts/edit/${_id}`,
       {
-        postData:postData,
+        postData: postData,
       },
       {
         headers: {

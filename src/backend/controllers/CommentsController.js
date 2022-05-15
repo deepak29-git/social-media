@@ -32,6 +32,50 @@ export const getPostCommentsHandler = function (schema, request) {
  * send POST Request at /api/comments/add/:postId
  * */
 
+// export const addPostCommentHandler = function (schema, request) {
+//   const user = requiresAuth.call(this, request);
+//   try {
+//     if (!user) {
+//       return new Response(
+//         404,
+//         {},
+//         {
+//           errors: [
+//             "The username you entered is not Registered. Not Found error",
+//           ],
+//         }
+//       );
+//     }
+//     const { postId } = request.params;
+//     const { commentData } = JSON.parse(request.requestBody);
+
+//     const comment = {
+//       _id: uuid(),
+
+//       ...commentData,
+//       // addComment:commentData,
+//       username: user.username,
+//       votes: { upvotedBy: [], downvotedBy: [] },
+//       createdAt: formatDate(),
+//       updatedAt: formatDate(),
+//     };
+//     const post = schema.posts.findBy({ _id: postId }).attrs;
+//     post.comments.push(comment);
+//     this.db.posts.update({ _id: postId }, post);
+// return new Response(201, {}, { comments: post.comments });
+//     return new Response(201, {}, { posts: this.db.posts });
+
+//   } catch (error) {
+//     return new Response(
+//       500,
+//       {},
+//       {
+//         error,
+//       }
+//     );
+//   }
+// };
+
 export const addPostCommentHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
   try {
@@ -47,12 +91,12 @@ export const addPostCommentHandler = function (schema, request) {
       );
     }
     const { postId } = request.params;
-    const { commentData } = JSON.parse(request.requestBody);
-
+    const { content, username } = JSON.parse(request.requestBody);
     const comment = {
       _id: uuid(),
-      addCommment:commentData,
-      username: user.username,
+      content: content,
+      username: username,
+      userPhoto: user?.profilePhoto?.chosen,
       votes: { upvotedBy: [], downvotedBy: [] },
       createdAt: formatDate(),
       updatedAt: formatDate(),
@@ -92,23 +136,26 @@ export const editPostCommentHandler = function (schema, request) {
       );
     }
     const { postId, commentId } = request.params;
-    const { commentData } = JSON.parse(request.requestBody);
+    const { content, userName } = JSON.parse(request.requestBody);
     const post = schema.posts.findBy({ _id: postId }).attrs;
     const commentIndex = post.comments.findIndex(
       (comment) => comment._id === commentId
     );
-    if (post.comments[commentIndex].username !== user.username) {
-      return new Response(
-        400,
-        {},
-        { errors: ["Cannot edit a comment doesn't belong to the User."] }
-      );
-    }
+
+    // if (post.comments[commentIndex].username !== user.username) {
+    //   return new Response(
+    //     400,
+    //     {},
+    //     { errors: ["Cannot edit a comment doesn't belong to the User."] }
+    //   );
+    // }
     post.comments[commentIndex] = {
       ...post.comments[commentIndex],
-      ...commentData,
+      content: content,
+      userName: userName,
       updatedAt: formatDate(),
     };
+
     this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { comments: post.comments });
   } catch (error) {
@@ -129,6 +176,7 @@ export const editPostCommentHandler = function (schema, request) {
 
 export const deletePostCommentHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
+  console.log("from backend");
   try {
     if (!user) {
       return new Response(
@@ -143,22 +191,25 @@ export const deletePostCommentHandler = function (schema, request) {
     }
     const { postId, commentId } = request.params;
     const post = schema.posts.findBy({ _id: postId }).attrs;
+
     const commentIndex = post.comments.findIndex(
       (comment) => comment._id === commentId
     );
-    if (
-      post.comments[commentIndex].username !== user.username &&
-      post.username !== user.username
-    ) {
-      return new Response(
-        400,
-        {},
-        { errors: ["Cannot delete a comment doesn't belong to the User."] }
-      );
-    }
+
+    // if (
+    //   post.comments[commentIndex].username !== user.username &&
+    //   post.username !== user.username
+    // ) {
+    //   return new Response(
+    //     400,
+    //     {},
+    //     { errors: ["Cannot delete a comment doesn't belong to the User."] }
+    //   );
+    // }
     post.comments = post.comments.filter(
       (comment) => comment._id !== commentId
     );
+    console.log("from backend");
     this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { comments: post.comments });
   } catch (error) {
@@ -266,7 +317,7 @@ export const downvotePostCommentHandler = function (schema, request) {
     ].votes.upvotedBy.filter((currUser) => currUser._id !== user._id);
     post.comments[commentIndex].votes.downvotedBy.push(user);
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
-    return new Response(201, {}, {  comments: post.comments  });
+    return new Response(201, {}, { comments: post.comments });
   } catch (error) {
     return new Response(
       500,

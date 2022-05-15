@@ -11,7 +11,8 @@ const PostProvider = ({ children }) => {
     editInput:"",
     bookmarkPost:[],
     commentInput:{},
-    
+    comments:[],
+    commentId:""
   });
 
   return (

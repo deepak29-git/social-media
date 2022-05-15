@@ -1,8 +1,9 @@
 import "../../Pages/Home/Home.css";
 import { BsThreeDots } from "react-icons/bs";
+import { BiUpvote,BiDownvote } from "react-icons/bi";
 import { deletePostApi } from "../../all-api/post-api";
 import { dislikePostApi, likePostApi } from "../../all-api/like-dislike-post";
-import {CommentModal} from '../CommentModal/CommentModal'
+import { CommentModal } from "../CommentModal/CommentModal";
 import {
   addToBookmarkApi,
   removePostFromBookmarkApi,
@@ -16,21 +17,28 @@ import {
   IconButton,
   useDisclosure,
   Flex,
+  Avatar,
+  Heading,
 } from "@chakra-ui/react";
 import { usePost } from "../../Context/post-context";
 import { EditPostModal } from "../PostModal/EditPostModal";
-
+import { useEffect, useState } from "react";
+import { deleteCommentApi, downvoteCommentApi, getComments, upvoteCommentApi } from "../../all-api/comment-api";
+import { EditCommentModal } from "../CommentModal/EditCommentModal";
 export const PostCard = ({ post }) => {
   const { postDispatch, postState } = usePost();
   const { bookmarkPost } = postState;
-  const {onClose,isOpen, onOpen } = useDisclosure();
-  const { _id, content, likes } = post;
+  const { onClose, isOpen, onOpen } = useDisclosure();
+  const { _id, content, likes, username } = post;
+  const [comments, setComments] = useState([]);
+  const [postId,setPostId]=useState(_id)
+  useEffect(() => {
+    getComments(_id, setComments);
+  }, []);
   return (
     <Box className="post-container">
-       <EditPostModal onClose={onClose} isOpen={isOpen} />
-       <CommentModal onClose={onClose} isOpen={isOpen}/>
-      <Box className="post-content" p={4} >
-        <Box as="h4">UserName</Box>
+      <Box className="post-content" p={4}>
+        <Box as="h4">{username}</Box>
         <Menu>
           <MenuButton
             as={IconButton}
@@ -47,6 +55,7 @@ export const PostCard = ({ post }) => {
             >
               Edit post
             </MenuItem>
+            <EditPostModal onClose={onClose} isOpen={isOpen} />
             <MenuItem onClick={() => deletePostApi(_id, postDispatch)}>
               Delete post
             </MenuItem>
@@ -82,14 +91,18 @@ export const PostCard = ({ post }) => {
 
           <Box as="span">Like {likes.likeCount !== 0 && likes.likeCount}</Box>
         </Flex>
-
+        <CommentModal
+          onClose={onClose}
+          isOpen={isOpen}
+          setComments={setComments}
+        />
         <Flex
           className="post-icon"
           alignItems="center"
           gap="1"
           cursor="pointer"
-          onClick={()=>{
-            onOpen()
+          onClick={() => {
+            onOpen();
             postDispatch({ type: "ID", payload: _id });
           }}
         >
@@ -116,6 +129,50 @@ export const PostCard = ({ post }) => {
           <Box as="span">Bookmark</Box>
         </Flex>
       </Flex>
+      {comments.map(({ _id, content, username,votes }) => ( 
+     
+       <Box key={_id} display="flex" gap={4} backgroundColor="#e2e8f0" p={4} alignItems="center">
+          <Avatar src="https://bit.ly/broken-link" />
+          <Box>
+            <Heading as="h5" size="sm">
+              {username}
+            </Heading>
+            <Box>{content}</Box>
+            {votes.upvotedBy.map(({_id,firstName,lastName})=>(
+              <Box key={_id}>Upvoted by: <Heading as="span" size="sm">{firstName} {lastName}</Heading></Box>
+            ))}
+            {votes.downvotedBy.map(({_id,firstName,lastName})=>(
+              <Box key={_id}>Downvoted by: <Heading as="span" size="sm">{firstName} {lastName}</Heading></Box>
+            ))}
+          </Box>
+          <Box marginLeft="auto" display="flex" gap={4}>
+            <IconButton variant="outline" colorScheme="teal" icon={<BiUpvote/>} onClick={()=>upvoteCommentApi(_id,postId ,setComments)} />
+            <IconButton variant="outline" colorScheme="teal" icon={<BiDownvote/>} onClick={()=>downvoteCommentApi(_id,postId ,setComments)}/>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<BsThreeDots />}
+                variant="outline"
+              />
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    onOpen();
+                    postDispatch({ type: "COMMENT_ID", payload: _id });
+                  }}
+                >
+                  Edit
+                </MenuItem>
+                <EditCommentModal onClose={onClose} isOpen={isOpen} setComments={setComments} />
+                <MenuItem onClick={() => deleteCommentApi(_id,postId ,setComments)}>
+                  Delete
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
+        </Box>
+      ))}
     </Box>
   );
 };

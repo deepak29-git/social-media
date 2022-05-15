@@ -11,8 +11,9 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { editProfileApi } from "../../all-api/user-api";
+import { useAuth } from "../../Context/auth-context";
 import { useUser } from "../../Context/user-context";
 export const EditProfileModal = ({ isOpen, onClose }) => {
   const initialRef = useRef();
@@ -21,6 +22,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
     userDispatch,
     userState: { user },
   } = useUser();
+  const {setUser}=useAuth()
    
 
 
@@ -44,6 +46,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
+              <Input type="file"/>
               <FormLabel>First name</FormLabel>
               <Input
                 name="firstName"
@@ -90,7 +93,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
               colorScheme="teal"
               mr={3}
               onClick={() => {
-                editProfileApi(user, userDispatch);
+                editProfileApi(user, setUser);
                 onClose();
               }}
             >

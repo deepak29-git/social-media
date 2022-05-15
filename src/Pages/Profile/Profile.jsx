@@ -1,32 +1,32 @@
-import { Box, Button, Flex, Heading, useDisclosure } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { getAllUser, getUser } from "../../all-api/user-api";
+import { Box, Button, Flex, Heading, useDisclosure,Avatar } from "@chakra-ui/react";
+import {getUser } from "../../all-api/user-api";
 import { EditProfileModal } from "../../Components/EditProfileModal/EditProfileModal";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import { useUser } from "../../Context/user-context";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/auth-context";
 export const Profile = () => {
-  const { userState:{users}, userDispatch } = useUser();
+  const {userState:{followUser} ,userDispatch } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  useEffect(() => {
-    getAllUser(userDispatch);
-  }, []);
+  const {
+    user: { _id, firstName, lastName, userName, bio },
+    setUser
+  } = useAuth();
 
   return (
     <Box className="grid-container">
       <Sidebar />
-      <Box  mt={110} gridColumn="2 / 3" gridGap={10}>
+      <Box mt={110} gridColumn="2 / 3" gridGap={10}>
+        <EditProfileModal isOpen={isOpen} onClose={onClose} />
 
-      <EditProfileModal isOpen={isOpen} onClose={onClose} />
-      {users.map(({ _id, firstName, lastName, userName, bio }) => (
         <Flex
           key={_id}
           className="post-container"
           p={4}
-          justifyContent="space-between"
+          gap="1rem"
           alignItems="center"
         >
+          <Avatar src='https://bit.ly/broken-link' />
           <Box>
             <Heading as="h4" size="md">
               {firstName} {lastName}
@@ -37,7 +37,8 @@ export const Profile = () => {
               <Link to="/following">
                 <Box as="p">
                   <Heading as="span" size="sm">
-                   65
+                    {followUser?.following?.length || 0}
+                    
                   </Heading>{" "}
                   Following
                 </Box>
@@ -45,7 +46,7 @@ export const Profile = () => {
               <Link to="/followers">
                 <Box as="p">
                   <Heading as="span" size="sm">
-                    88
+                  {followUser?.followers?.length || 0}
                   </Heading>{" "}
                   Followers
                 </Box>
@@ -53,17 +54,17 @@ export const Profile = () => {
             </Box>
           </Box>
           <Button
+            marginLeft="auto"
             onClick={() => {
               onOpen();
               getUser(_id, userDispatch);
             }}
             colorScheme="teal"
             variant="outline"
-            >
+          >
             Edit Profile
           </Button>
         </Flex>
-      ))}
       </Box>
     </Box>
   );
