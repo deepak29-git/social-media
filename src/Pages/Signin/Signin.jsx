@@ -50,6 +50,7 @@ export const SignIn = () => {
         },
       });
       localStorage.setItem("token", data.encodedToken);
+      localStorage.setItem("user",JSON.stringify(data.foundUser))
       setIsAuth(true);
       navigate("/");
       toast({

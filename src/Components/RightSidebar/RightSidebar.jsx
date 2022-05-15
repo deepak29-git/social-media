@@ -7,7 +7,7 @@ import {
 import { getAllUser } from "../../all-api/user-api";
 import { useUser } from "../../Context/user-context";
 
-export const UserProfile = () => {
+export const RightSidebar = () => {
   const {
     userState: { users, followUser },
     userDispatch,
