@@ -1,10 +1,12 @@
 import "../Navbar/Navbar.css";
-import { Button, Box, Heading } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Button, Box, Heading, useToast } from "@chakra-ui/react";
+import { Link,useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/auth-context";
 
 export const Navbar = () => {
   const { isAuth, setIsAuth } = useAuth();
+  const navigate=useNavigate()
+  const toast=useToast()
   return (
     <Box px={10} py={4} className="nav-container">
       <Box display="flex" gap="5" alignItems="center" mb={4}>
@@ -21,6 +23,13 @@ export const Navbar = () => {
               onClick={() => {
                 localStorage.removeItem("token");
                 setIsAuth(false);
+                navigate('/')
+                toast({
+                  title: "Logout Successfully.",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                });
               }}
               colorScheme="teal"
               variant="solid"

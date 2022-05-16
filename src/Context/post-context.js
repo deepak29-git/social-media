@@ -4,13 +4,15 @@ import { postReducer } from "../Reducer/post-reducer";
 const PostContext = createContext(null);
 
 const PostProvider = ({ children }) => {
+  
   const [postState, postDispatch] = useReducer(postReducer, {
     createPost: [],
     id:"",
     content:"",
-    editInput:"",
+    postInput:"",
     bookmarkPost:[],
-    commentInput:{},
+    commentInput:"",
+    editCommentInput:"",
     comments:[],
     commentId:""
   });

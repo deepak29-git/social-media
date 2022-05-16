@@ -15,12 +15,12 @@ import { editPostApi } from "../../all-api/post-api";
 import { usePost } from "../../Context/post-context";
 export const EditPostModal = ({ isOpen, onClose }) => {
   const { postDispatch, postState } = usePost();
-  const { id, editInput } = postState;
+  const { id, postInput } = postState;
   const initialRef = useRef();
   const finalRef = useRef();
 
   const editChangeHandler = (e) => {
-    postDispatch({ type: "EDIT_INPUT", payload: e.target.value });
+    postDispatch({ type: "POST_INPUT", payload: e.target.value });
   };
 
   return (
@@ -40,15 +40,16 @@ export const EditPostModal = ({ isOpen, onClose }) => {
               onChange={(e) => editChangeHandler(e)}
               ref={initialRef}
               placeholder="What do you want to talk about?"
-              value={editInput}
+              value={postInput}
             />
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
           <Button
+            disabled={postInput?false:true}
             onClick={() => {
-              editPostApi(postDispatch, id, editInput);
+              editPostApi(postDispatch, id, postInput);
               onClose();
             }}
             colorScheme="teal"

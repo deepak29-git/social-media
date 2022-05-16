@@ -11,6 +11,7 @@ const getAllUser = async (userDispatch) => {
 };
 
 const getUser = async (id, userDispatch) => {
+  console.log(id,"getuer")
   try {
     const { data } = await axios.get(`/api/users/${id}`);
     userDispatch({ type: "GET_USER", payload: data.user });
@@ -30,8 +31,6 @@ const editProfileApi = async (userData, setUser) => {
       headers: { authorization: getToken() },
     });
     setUser(data.user)
-    // userDispatch({ type: "EDIT_USER", payload: data.user });
-    console.log(data.user, "from edit api");
   } catch (error) {
     console.log(error);
   }

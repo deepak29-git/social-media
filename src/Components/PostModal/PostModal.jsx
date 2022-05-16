@@ -12,15 +12,16 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { createPostApi } from "../../all-api/post-api";
+import { useAuth } from "../../Context/auth-context";
 import { usePost } from "../../Context/post-context";
 export const PostModal = ({ isOpen, onClose }) => {
-  const [postInput, setPostInput] = useState("");
-  const { postDispatch } = usePost();
+  const {postState:{postInput},postDispatch} = usePost();
   const initialRef = useRef();
   const finalRef = useRef();
+  const {user}=useAuth()
 
   const postHandler = () => {
-    createPostApi(postDispatch, postInput);
+    createPostApi(postDispatch, postInput,user);
     onClose();
   };
 
@@ -38,7 +39,7 @@ export const PostModal = ({ isOpen, onClose }) => {
         <ModalBody pb={6}>
           <FormControl>
             <Input
-              onChange={(e) => setPostInput(e.target.value)}
+              onChange={(e) => postDispatch({type:"POST_INPUT",payload:e.target.value})}
               ref={initialRef}
               placeholder="What do you want to talk about?"
             />
@@ -46,7 +47,7 @@ export const PostModal = ({ isOpen, onClose }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button onClick={() => postHandler()} colorScheme="teal" mr={3}>
+          <Button disabled={!postInput?true:false} onClick={() => postHandler()} colorScheme="teal" mr={3}>
             Post
           </Button>
         </ModalFooter>

@@ -11,47 +11,52 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { editProfileApi } from "../../all-api/user-api";
 import { useAuth } from "../../Context/auth-context";
 import { useUser } from "../../Context/user-context";
 export const EditProfileModal = ({ isOpen, onClose }) => {
-  const initialRef = useRef();
-  const finalRef = useRef();
   const {
     userDispatch,
     userState: { user },
   } = useUser();
-  const {setUser}=useAuth()
-   
-
+  const { setUser } = useAuth();
 
   const onChangeHandler = (e) => {
-    const {name,value}=e.target;
-    userDispatch({type:"GET_USER",payload:{...user,[name]:value}})
+    const { name, value } = e.target;
+    userDispatch({ type: "GET_USER", payload: { ...user, [name]: value } });
   };
+
+  const onImageChangeHandler=(e)=>{
+    if (e.target.files && e.target.files[0]) {
+      let img = e.target.files[0];
+        userDispatch({type:"UPLOAD_IMAGE",payload:URL.createObjectURL(img)})
+    }
+  }
 
 
   return (
     <>
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Edit Profile</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <Input type="file"/>
+              <FormLabel>Upload profile</FormLabel>
+              <Input
+                type="file"
+                onChange={onImageChangeHandler}
+              />
+            </FormControl>
+
+            <FormControl>
               <FormLabel>First name</FormLabel>
               <Input
                 name="firstName"
+                autoFocus
                 onChange={(e) => onChangeHandler(e)}
-                ref={initialRef}
                 placeholder="First name"
                 defaultValue={user.firstName}
               />
@@ -84,6 +89,16 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
                 onChange={(e) => onChangeHandler(e)}
                 placeholder="Bio"
                 defaultValue={user.bio}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Portfolio</FormLabel>
+              <Input
+                name="portfolio"
+                onChange={(e) => onChangeHandler(e)}
+                placeholder="Portfolio link"
+                defaultValue={user.portfolio}
               />
             </FormControl>
           </ModalBody>

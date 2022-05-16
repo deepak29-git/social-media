@@ -8,6 +8,8 @@ export const userReducer = (state, action) => {
       return { ...state, followUser: action.payload };
     case "UNFOLLOW_USER":
       return { ...state, followUser: action.payload };
+    case "UPLOAD_IMAGE":
+      return {...state,uploadImage:action.payload}
     default:
       return state;
   }

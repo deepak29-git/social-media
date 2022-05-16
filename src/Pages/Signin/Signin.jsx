@@ -63,8 +63,35 @@ export const SignIn = () => {
       console.log(error);
     }
   };
+
+
+  const guestLoginHandler = async () => {
+    try {
+      const { data } = await axios({
+        method: "POST",
+        url: "/api/auth/login",
+        data: {
+          email: "deepak123@gmail.com",
+          password: "deepak123",
+        },
+      });
+      localStorage.setItem("token", data.encodedToken);
+      localStorage.setItem("user",JSON.stringify(data.foundUser))
+      setIsAuth(true);
+      navigate("/");
+      toast({
+        title: "Logged In Successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Box
+    
       boxSize="md"
       display="flex"
       width="100%"
@@ -72,8 +99,8 @@ export const SignIn = () => {
       alignItems="center"
       flexWrap="wrap"
     >
-      <Image boxSize="29rem" src={landing} alt="landing" />
-      <Box width="30rem" px={2}>
+      <Image mt={110} boxSize="29rem" src={landing} alt="landing" />
+      <Box mt={110}  width="30rem" px={2}>
         <Heading mb={8}>Welcome to your professional community</Heading>
         <FormControl>
           <FormLabel htmlFor="email">Email address</FormLabel>
@@ -121,6 +148,14 @@ export const SignIn = () => {
             mt={4}
           >
             Sign In
+          </Button>
+          <Button
+            onClick={guestLoginHandler}
+            colorScheme="teal"
+            width="100%"
+            mt={4}
+          >
+            Guest Login
           </Button>
         </FormControl>
       </Box>

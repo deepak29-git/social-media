@@ -10,6 +10,7 @@ import { getToken } from "../Utility/get-token";
       headers: { authorization: getToken() },
     });
     postDispatch({ type: "LIKE_POST", payload: data.posts });
+    
   } catch (error) {
     console.log(error);
   }

@@ -52,10 +52,12 @@ export const Sidebar = () => {
             </ListItem>
           </NavLink>
 
+          <NavLink to="/explore">
           <ListItem className="list-item">
             <Icon as={MdOutlineExplore} w={6} h={6} />
             <Heading size="md">Explore</Heading>
           </ListItem>
+          </NavLink>
 
           <ListItem className="list-item">
             <Icon as={IoIosNotificationsOutline} w={6} h={6} />

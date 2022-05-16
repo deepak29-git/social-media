@@ -1,20 +1,23 @@
 import axios from "axios";
 import { getToken } from "../Utility/get-token";
-const getPost = async (postDispatch) => {
+
+const getPost = async (postDispatch,setLoader) => {
   try {
+    setLoader(true)
     const { data } = await axios.get("/api/posts");
+    setLoader(false)
     postDispatch({ type: "GET_POST", payload: data.posts });
   } catch (error) {
     console.log(error);
   }
 };
 
-const createPostApi = async (postDispatch, post) => {
+const createPostApi = async (postDispatch, post,userData) => {
   try {
     const { data } = await axios({
       method: "POST",
       url: "/api/posts",
-      data: { postData: post },
+      data: { postData: post,username:userData.userName },
       headers: {
         authorization: getToken(),
       },

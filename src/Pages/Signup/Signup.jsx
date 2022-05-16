@@ -75,8 +75,8 @@ export const Signup = () => {
       alignItems="center"
       flexWrap="wrap"
     >
-      <Image boxSize="29rem" src={landing} alt="landing" />
-      <Box width="30rem" px={2}>
+      <Image mt={110}  boxSize="29rem" src={landing} alt="landing" />
+      <Box mt={110}  width="30rem" px={2}>
         <Heading mb={8}>Create your account</Heading>
         <FormControl>
           <FormLabel htmlFor="firstName">First name</FormLabel>

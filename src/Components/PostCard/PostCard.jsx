@@ -19,6 +19,7 @@ import {
   Flex,
   Avatar,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
 import { usePost } from "../../Context/post-context";
 import { EditPostModal } from "../PostModal/EditPostModal";
@@ -27,14 +28,17 @@ import { deleteCommentApi, downvoteCommentApi, getComments, upvoteCommentApi } f
 import { EditCommentModal } from "../CommentModal/EditCommentModal";
 export const PostCard = ({ post }) => {
   const { postDispatch, postState } = usePost();
-  const { bookmarkPost } = postState;
+  const [showModal,setShowModal]=useState(false)
+  const { bookmarkPost,createPost } = postState;
   const { onClose, isOpen, onOpen } = useDisclosure();
+  const toast=useToast()
   const { _id, content, likes, username } = post;
   const [comments, setComments] = useState([]);
-  const [postId,setPostId]=useState(_id)
+  const postId=_id;
   useEffect(() => {
     getComments(_id, setComments);
   }, []);
+
   return (
     <Box className="post-container">
       <Box className="post-content" p={4}>
@@ -91,11 +95,7 @@ export const PostCard = ({ post }) => {
 
           <Box as="span">Like {likes.likeCount !== 0 && likes.likeCount}</Box>
         </Flex>
-        <CommentModal
-          onClose={onClose}
-          isOpen={isOpen}
-          setComments={setComments}
-        />
+
         <Flex
           className="post-icon"
           alignItems="center"
@@ -103,12 +103,19 @@ export const PostCard = ({ post }) => {
           cursor="pointer"
           onClick={() => {
             onOpen();
+            setShowModal(true)
             postDispatch({ type: "ID", payload: _id });
           }}
         >
+
           <Box className="material-icons-outlined">comment </Box>
           <Box as="span">Comment</Box>
         </Flex>
+        {showModal&&<CommentModal
+          onClose={onClose}
+          isOpen={isOpen}
+          setComments={setComments}
+        />}
         <Flex
           className="post-icon"
           alignItems="center"
@@ -116,8 +123,8 @@ export const PostCard = ({ post }) => {
           cursor="pointer"
           onClick={() =>
             bookmarkPost.find((post) => post._id === _id)
-              ? removePostFromBookmarkApi(_id, postDispatch)
-              : addToBookmarkApi(_id, postDispatch)
+              ? removePostFromBookmarkApi(_id, postDispatch,toast)
+              : addToBookmarkApi(_id, postDispatch,toast)
           }
         >
           {bookmarkPost.find((post) => post._id === _id) ? (
@@ -129,6 +136,7 @@ export const PostCard = ({ post }) => {
           <Box as="span">Bookmark</Box>
         </Flex>
       </Flex>
+      
       {comments.map(({ _id, content, username,votes }) => ( 
      
        <Box key={_id} display="flex" gap={4} backgroundColor="#e2e8f0" p={4} alignItems="center">

@@ -1,4 +1,3 @@
-
 export { Navbar } from "./Components/Navbar/Navbar";
 export { Home } from "./Pages/Home/Home";
 export { SignIn } from "./Pages/Signin/Signin";
@@ -9,3 +8,4 @@ export { Bookmark } from "./Pages/Bookmark/Bookmark";
 export { Profile } from "./Pages/Profile/Profile";
 export { Following } from "./Pages/Following/Following";
 export { Followers } from "./Pages/Followers/Followers";
+export { Explore } from "./Pages/Explore/Explore";

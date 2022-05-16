@@ -4,14 +4,14 @@ export const postReducer = (state, action) => {
       return { ...state, createPost: action.payload };
     case "CREATE_POST":
       return { ...state, createPost: action.payload };
+      case "POST_INPUT":
+        return { ...state, postInput: action.payload };
     case "EDIT_POST":
       return { ...state, createPost: action.payload };
     case "ID":
       return { ...state, id: action.payload };
     case "CONTENT":
       return { ...state, content: action.payload };
-    case "EDIT_INPUT":
-      return { ...state, editInput: action.payload };
     case "DELETE_POST":
       return { ...state, createPost: action.payload };
     case "LIKE_POST":
@@ -26,6 +26,8 @@ export const postReducer = (state, action) => {
       return { ...state, bookmarkPost: action.payload };
       case "COMMENT_INPUT":
         return { ...state, commentInput: action.payload };
+      case "EDIT_COMMENT_INPUT":
+        return { ...state, editCommentInput: action.payload };
       case "ADD_COMMENT":
         return {...state,comments:action.payload}
       case "GET_COMMENTS":

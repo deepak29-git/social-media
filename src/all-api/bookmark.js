@@ -1,7 +1,7 @@
 import axios from "axios"
 import { getToken } from "../Utility/get-token"
 
-const addToBookmarkApi=async(postId,postDispatch)=>{
+const addToBookmarkApi=async(postId,postDispatch,toast)=>{
     try{
         const {data}=await axios({
             method:"POST",
@@ -9,12 +9,18 @@ const addToBookmarkApi=async(postId,postDispatch)=>{
             headers:{authorization:getToken()}
         })
         postDispatch({type:"BOOKMARK_POST",payload:data.bookmarks})
+        toast({
+            title: "Added to bookmark.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
     }catch(error){
         console.log(error)
     }
 }
 
-const removePostFromBookmarkApi=async(postId,postDispatch)=>{
+const removePostFromBookmarkApi=async(postId,postDispatch,toast)=>{
     try{
         const {data}=await axios({
             method:"POST",
@@ -22,6 +28,12 @@ const removePostFromBookmarkApi=async(postId,postDispatch)=>{
             headers:{authorization:getToken()}
         })
         postDispatch({type:"REMOVE_BOOKMARK_POST",payload:data.bookmarks})
+        toast({
+            title: "Removed from bookmark.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
     }catch(error){
         console.log(error)
     }
