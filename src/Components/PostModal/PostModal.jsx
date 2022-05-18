@@ -10,18 +10,19 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { createPostApi } from "../../all-api/post-api";
-import { useAuth } from "../../Context/auth-context";
-import { usePost } from "../../Context/post-context";
+import { postInputValue } from "../../redux/features/posts/postSlice";
 export const PostModal = ({ isOpen, onClose }) => {
-  const {postState:{postInput},postDispatch} = usePost();
+  const dispatch=useDispatch()
+  const {postInput}=useSelector((state)=>state.posts)
   const initialRef = useRef();
   const finalRef = useRef();
-  const {user}=useAuth()
+  const user=useSelector((state)=>state.auth.user)
 
   const postHandler = () => {
-    createPostApi(postDispatch, postInput,user);
+    createPostApi(dispatch, postInput,user);
     onClose();
   };
 
@@ -39,7 +40,7 @@ export const PostModal = ({ isOpen, onClose }) => {
         <ModalBody pb={6}>
           <FormControl>
             <Input
-              onChange={(e) => postDispatch({type:"POST_INPUT",payload:e.target.value})}
+              onChange={(e) => dispatch(postInputValue(e.target.value))}
               ref={initialRef}
               placeholder="What do you want to talk about?"
             />

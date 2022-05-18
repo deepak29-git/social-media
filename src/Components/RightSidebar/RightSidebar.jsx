@@ -1,20 +1,18 @@
 import { Box, Button } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   followUserApi,
   unfollowUserApi,
 } from "../../all-api/follow-unfollow-api";
 import { getAllUser } from "../../all-api/user-api";
-import { useUser } from "../../Context/user-context";
 
 export const RightSidebar = () => {
-  const {
-    userState: { users, followUser },
-    userDispatch,
-  } = useUser();
+  const {users,followUser}=useSelector((state)=>state.user)
+  const dispatch=useDispatch()
 
   useEffect(() => {
-    getAllUser(userDispatch);
+    getAllUser(dispatch)
   }, []);
 
   return (
@@ -26,14 +24,14 @@ export const RightSidebar = () => {
           </Box>
           {followUser?.following?.find((user) => user._id === _id) ? (
             <Button
-              onClick={() => unfollowUserApi(_id, userDispatch)}
+              onClick={() => unfollowUserApi(_id, dispatch)}
               colorScheme="teal"
             >
               Following
             </Button>
           ) : (
             <Button
-              onClick={() => followUserApi(_id, userDispatch)}
+              onClick={() => followUserApi(_id, dispatch)}
               colorScheme="teal"
             >
               Follow

@@ -4,11 +4,9 @@ import "./index.css";
 import App from "./App";
 import { makeServer } from "./server";
 import { ChakraProvider } from "@chakra-ui/react";
-import { AuthProvider } from "./Context/auth-context";
 import { BrowserRouter as Router } from "react-router-dom";
-import { PostProvider } from "./Context/post-context";
-import { UserProvider } from "./Context/user-context";
-
+import { Provider } from "react-redux";
+import { store } from "./redux/app/store";
 // Call make Server
 makeServer();
 
@@ -16,13 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <ChakraProvider>
-        <AuthProvider>
-          <PostProvider>
-            <UserProvider>
-              <App />
-            </UserProvider>
-          </PostProvider>
-        </AuthProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
       </ChakraProvider>
     </Router>
   </React.StrictMode>,

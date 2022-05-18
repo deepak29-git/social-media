@@ -10,16 +10,14 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import { addCommentApi } from "../../all-api/comment-api";
-import { useAuth } from "../../Context/auth-context";
-import { usePost } from "../../Context/post-context";
-
+import {commentInputValue} from '../../redux/features/posts/postSlice'
 export const CommentModal = ({ isOpen, onClose, setComments }) => {
-  const {
-    postDispatch,
-    postState: { commentInput, id },
-  } = usePost();
-  const { user } = useAuth();
+
+  const {commentInput,id}=useSelector((state)=>state.posts)
+  const dispatch=useDispatch()
+  const {user}=useSelector((state)=>state.auth)
 
   return (
     <>
@@ -32,10 +30,7 @@ export const CommentModal = ({ isOpen, onClose, setComments }) => {
             <FormControl>
               <Input
                 onChange={(e) =>
-                  postDispatch({
-                    type: "COMMENT_INPUT",
-                    payload: e.target.value,
-                  })
+                  dispatch(commentInputValue(e.target.value))
                 }
                 autoFocus
                 placeholder="Add your comment"

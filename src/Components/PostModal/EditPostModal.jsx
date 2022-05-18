@@ -11,16 +11,18 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { editPostApi } from "../../all-api/post-api";
-import { usePost } from "../../Context/post-context";
+import {postInputValue} from '../../redux/features/posts/postSlice'
 export const EditPostModal = ({ isOpen, onClose }) => {
-  const { postDispatch, postState } = usePost();
-  const { id, postInput } = postState;
+  const  dispatch  = useDispatch();
+  
+  const {id,postInput}=useSelector((state)=>state.posts)
   const initialRef = useRef();
   const finalRef = useRef();
 
   const editChangeHandler = (e) => {
-    postDispatch({ type: "POST_INPUT", payload: e.target.value });
+    dispatch(postInputValue(e.target.value));
   };
 
   return (
@@ -49,7 +51,7 @@ export const EditPostModal = ({ isOpen, onClose }) => {
           <Button
             disabled={postInput?false:true}
             onClick={() => {
-              editPostApi(postDispatch, id, postInput);
+              editPostApi(dispatch, id, postInput);
               onClose();
             }}
             colorScheme="teal"

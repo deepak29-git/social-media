@@ -1,10 +1,11 @@
 import "../Navbar/Navbar.css";
 import { Button, Box, Heading, useToast } from "@chakra-ui/react";
 import { Link,useNavigate } from "react-router-dom";
-import { useAuth } from "../../Context/auth-context";
-
+import {useSelector,useDispatch} from 'react-redux'
+import { logoutBtn } from "../../redux/features/auth/authSlice";
 export const Navbar = () => {
-  const { isAuth, setIsAuth } = useAuth();
+  const auth=useSelector((state)=>state.auth.value)
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const toast=useToast()
   return (
@@ -17,13 +18,13 @@ export const Navbar = () => {
             </Heading>
           </Link>
         </Box>
-        {isAuth ? (
+        {auth ? (
           <Box display="flex" justifyContent="flex-end" width="100%" gap="1rem">
             <Button
               onClick={() => {
                 localStorage.removeItem("token");
-                setIsAuth(false);
-                navigate('/')
+                dispatch(logoutBtn());
+                navigate('/signin')
                 toast({
                   title: "Logout Successfully.",
                   status: "success",
@@ -34,13 +35,13 @@ export const Navbar = () => {
               colorScheme="teal"
               variant="solid"
             >
-              <Link to="/">Logout</Link>
-            </Button>
+              Logout            
+              </Button>
           </Box>
         ) : (
           <Box display="flex" justifyContent="flex-end" width="100%" gap="1rem">
             <Button colorScheme="teal" variant="solid">
-              <Link to="/">Sign In</Link>
+              <Link to="/signin">Sign In</Link>
             </Button>
             <Button colorScheme="teal" variant="outline">
               <Link to="/signup">Join Now</Link>

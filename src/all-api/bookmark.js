@@ -1,14 +1,14 @@
 import axios from "axios"
 import { getToken } from "../Utility/get-token"
-
-const addToBookmarkApi=async(postId,postDispatch,toast)=>{
+import {addToBookmark,removeFromBookmark,getBookmark} from '../redux/features/posts/postSlice'
+const addToBookmarkApi=async(postId,dispatch,toast)=>{
     try{
         const {data}=await axios({
             method:"POST",
             url:`/api/users/bookmark/${postId}`,
             headers:{authorization:getToken()}
         })
-        postDispatch({type:"BOOKMARK_POST",payload:data.bookmarks})
+        dispatch(addToBookmark(data.bookmarks))
         toast({
             title: "Added to bookmark.",
             status: "success",
@@ -20,14 +20,14 @@ const addToBookmarkApi=async(postId,postDispatch,toast)=>{
     }
 }
 
-const removePostFromBookmarkApi=async(postId,postDispatch,toast)=>{
+const removePostFromBookmarkApi=async(postId,dispatch,toast)=>{
     try{
         const {data}=await axios({
             method:"POST",
             url:`/api/users/remove-bookmark/${postId}`,
             headers:{authorization:getToken()}
         })
-        postDispatch({type:"REMOVE_BOOKMARK_POST",payload:data.bookmarks})
+        dispatch(removeFromBookmark(data.bookmarks))
         toast({
             title: "Removed from bookmark.",
             status: "success",
@@ -38,16 +38,16 @@ const removePostFromBookmarkApi=async(postId,postDispatch,toast)=>{
         console.log(error)
     }
 }
-const getBookmark=async(postDispatch)=>{
+const getBookmarkApi=async(dispatch)=>{
     try{
         const {data}=await axios({
             method:"GET",
             url:"/api/users/bookmark",
             headers:{authorization:getToken()}
         })
-        postDispatch({type:"GET_BOOKMARK",payload:data.bookmarks})
+        dispatch(getBookmark(data.bookmarks))
     }catch(error){
         console.log(error)
     }
 }
-export {addToBookmarkApi,removePostFromBookmarkApi,getBookmark}
+export {addToBookmarkApi,removePostFromBookmarkApi,getBookmarkApi}

@@ -15,12 +15,13 @@ import landing from "../../assets/svg/landing.svg";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../Context/auth-context";
-
+import { useDispatch } from "react-redux";
+import { signinBtn } from "../../redux/features/auth/authSlice";
 export const SignIn = () => {
   const [show, setShow] = useState(false);
   const [showMsg, setShowMsg] = useState(false);
-  const { setIsAuth } = useAuth();
+  const dispatch = useDispatch();
+;
   const toast = useToast();
   const [user, setUser] = useState({
     email: "",
@@ -50,8 +51,8 @@ export const SignIn = () => {
         },
       });
       localStorage.setItem("token", data.encodedToken);
-      localStorage.setItem("user",JSON.stringify(data.foundUser))
-      setIsAuth(true);
+      localStorage.setItem("user", JSON.stringify(data.foundUser));
+      dispatch(signinBtn());
       navigate("/");
       toast({
         title: "Logged In Successfully.",
@@ -64,7 +65,6 @@ export const SignIn = () => {
     }
   };
 
-
   const guestLoginHandler = async () => {
     try {
       const { data } = await axios({
@@ -76,8 +76,8 @@ export const SignIn = () => {
         },
       });
       localStorage.setItem("token", data.encodedToken);
-      localStorage.setItem("user",JSON.stringify(data.foundUser))
-      setIsAuth(true);
+      localStorage.setItem("user", JSON.stringify(data.foundUser));
+      dispatch(signinBtn());
       navigate("/");
       toast({
         title: "Logged In Successfully.",
@@ -91,7 +91,6 @@ export const SignIn = () => {
   };
   return (
     <Box
-    
       boxSize="md"
       display="flex"
       width="100%"
@@ -100,7 +99,7 @@ export const SignIn = () => {
       flexWrap="wrap"
     >
       <Image mt={110} boxSize="29rem" src={landing} alt="landing" />
-      <Box mt={110}  width="30rem" px={2}>
+      <Box mt={110} width="30rem" px={2}>
         <Heading mb={8}>Welcome to your professional community</Heading>
         <FormControl>
           <FormLabel htmlFor="email">Email address</FormLabel>

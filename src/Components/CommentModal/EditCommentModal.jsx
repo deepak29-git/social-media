@@ -10,18 +10,15 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { editCommentApi } from "../../all-api/comment-api";
-import { useAuth } from "../../Context/auth-context";
-import { usePost } from "../../Context/post-context";
+import { commentInputValue } from "../../redux/features/posts/postSlice";
 
 export const EditCommentModal = ({ isOpen, onClose, setComments }) => {
-  const {
-    postDispatch,
-    postState: { commentInput, commentId, id },
-  } = usePost();
-  const { user } = useAuth();
-
+  
+  const dispatch=useDispatch()
+  const user=useSelector((state)=>state.auth.user)
+  const {commentInput, commentId, id}=useSelector((state)=>state.posts)
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -33,10 +30,7 @@ export const EditCommentModal = ({ isOpen, onClose, setComments }) => {
             <FormControl>
               <Input
                 onChange={(e) =>
-                  postDispatch({
-                    type: "COMMENT_INPUT",
-                    payload: e.target.value,
-                  })
+                  dispatch(commentInputValue(e.target.value))
                 }
                 value={commentInput}
                 placeholder="Edit your comment"

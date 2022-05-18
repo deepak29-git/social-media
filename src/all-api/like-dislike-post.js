@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "../Utility/get-token";
-
- const likePostApi = async (postId, postDispatch) => {
+import {likePost,dislikePost} from '.././redux/features/posts/postSlice'
+ const likePostApi = async (postId, dispatch) => {
   try {
     const { data } = await axios({
       method: "POST",
@@ -9,13 +9,13 @@ import { getToken } from "../Utility/get-token";
       data: {},
       headers: { authorization: getToken() },
     });
-    postDispatch({ type: "LIKE_POST", payload: data.posts });
+    dispatch(likePost(data.posts));
     
   } catch (error) {
     console.log(error);
   }
 };
- const dislikePostApi = async (postId, postDispatch) => {
+ const dislikePostApi = async (postId, dispatch) => {
   try {
     const { data } = await axios({
       method: "POST",
@@ -23,7 +23,7 @@ import { getToken } from "../Utility/get-token";
       data: {},
       headers: { authorization: getToken() },
     });
-    postDispatch({ type: "DISLIKE_POST", payload: data.posts });
+    dispatch(dislikePost(data.posts));
   } catch (error) {
     console.log(error);
   }
