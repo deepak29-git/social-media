@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "../Utility/get-token";
-
-const followUserApi = async (followUserId, userDispatch) => {
+import { followUser,unfollowUser } from "../redux/features/user/userSlice";
+const followUserApi = async (followUserId, dispatch) => {
   try {
     const { data } = await axios({
       method: "POST",
@@ -9,13 +9,13 @@ const followUserApi = async (followUserId, userDispatch) => {
       data: {},
       headers: { authorization: getToken() },
     });
-    userDispatch({ type: "FOLLOW_USER", payload: data.user });
+    dispatch(followUser(data.user))
   } catch (error) {
     console.log(error);
   }
 };
 
-const unfollowUserApi = async (followUserId, userDispatch) => {
+const unfollowUserApi = async (followUserId, dispatch) => {
   try {
     const { data } = await axios({
       method: "POST",
@@ -23,7 +23,8 @@ const unfollowUserApi = async (followUserId, userDispatch) => {
       data: {},
       headers: { authorization: getToken() },
     });
-    userDispatch({ type: "UNFOLLOW_USER", payload: data.user });
+    // userDispatch({ type: "UNFOLLOW_USER", payload: data.user });
+    dispatch(unfollowUser(data.user))
   } catch (error) {
     console.log(error);
   }

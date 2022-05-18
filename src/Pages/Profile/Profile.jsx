@@ -3,15 +3,15 @@ import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {getUser } from "../../all-api/user-api";
 import { EditProfileModal } from "../../Components/EditProfileModal/EditProfileModal";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
-import { useUser } from "../../Context/user-context";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../Context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
 export const Profile = () => {
-  const {userState:{followUser,uploadImage} ,userDispatch } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    user: { _id, firstName, lastName, userName, bio,portfolio,profilePhoto },
-  } = useAuth();
+  const followUser=useSelector((state)=>state.user.followUser)
+  const profileImage=useSelector((state)=>state.user.uploadImage)
+  const {user}=useSelector((state)=>state.auth)
+  const dispatch=useDispatch()
+  const {_id, firstName, lastName, userName, bio,portfolio}=user;
   return (
     <Box className="grid-container">
       <Sidebar />
@@ -20,12 +20,12 @@ export const Profile = () => {
 
         <Flex
           key={_id}
-          className="post-container"
+          className="post-container"  
           p={4}
           gap="1rem"
           alignItems="center"
         >
-          <Avatar size='2xl' src={ uploadImage} alt="not fount"/>
+          <Avatar size='2xl' src={ profileImage} alt="not fount"/>
           <Box>
             <Heading as="h4" size="md">
               {firstName} {lastName}
@@ -57,7 +57,7 @@ export const Profile = () => {
             marginLeft="auto"
             onClick={() => {
               onOpen();
-              getUser(_id, userDispatch);
+              getUser(_id, dispatch);
             }}
             colorScheme="teal"
             variant="outline"

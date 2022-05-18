@@ -1,42 +1,43 @@
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import { Box, Button,Image } from "@chakra-ui/react";
-import { usePost } from "../../Context/post-context";
 import { PostCard } from "../../Components/PostCard/PostCard";
 import { RightSidebar } from "../../Components/RightSidebar/RightSidebar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getPost } from "../../all-api/post-api";
 import { useLoader } from "../../Custom-hook/loader";
 import loading from '../../assets/gif/loading.gif'
 import '../Home/Home.css'
+import { useDispatch, useSelector } from "react-redux";
+import { getCreatePost } from "../../redux/features/posts/postSlice";
 export const Home = () => {
-  const { postState, postDispatch } = usePost();
-  const { createPost } = postState;
+  const dispatch=useDispatch()
+  const {createPost}=useSelector((state)=>state.posts)
   const {loader,setLoader}=useLoader()
 
   useEffect(() => {
-    getPost(postDispatch,setLoader);
+    getPost(dispatch,setLoader);
   }, []);
 
 
-  const sortByDateBtn=(value)=>{
-    if(value==="date"){
+  const sortByDateBtn=(action)=>{
+    if(action==="sortByDate"){
       const sortedPostByDate=[...createPost].sort((a,b)=>b.createdAt.slice(7,10).split("-").join("")-a.createdAt.slice(7,10).split("-").join(""))
       const sortedPostByTime=[...createPost].sort((a,b)=>b.createdAt.slice(14,16).split(":").join("")-a.createdAt.slice(14,16).split(":").join(""))
-      postDispatch({ type: "CREATE_POST", payload: sortedPostByDate });  
-      postDispatch({ type: "CREATE_POST", payload: sortedPostByTime });  
+      dispatch( getCreatePost (sortedPostByDate));  
+      dispatch( getCreatePost (sortedPostByTime));  
     }else {
-      postDispatch({ type: "CREATE_POST", payload: createPost });  
+      dispatch( getCreatePost (createPost) );  
     }
   }
 
-  const trendingBtn = (value) => {
-    if (value === "trending") {
+  const trendingBtn = (action) => {
+    if (action === "sortByTrending") {
       const sortedPost = [...createPost].sort(
         (a, b) => b.likes.likeCount - a.likes.likeCount
       );
-      postDispatch({ type: "CREATE_POST", payload: sortedPost });
+      dispatch(getCreatePost( sortedPost) );
     } else {
-      postDispatch({ type: "CREATE_POST", payload: createPost });
+      dispatch(getCreatePost(createPost) );
     }
   };
   return (
@@ -45,18 +46,17 @@ export const Home = () => {
       <Box mt={110} gridColumn="2 / 3" gridGap={10} >
         <Box display="flex" gap="4" mb={4} position="sticky" top="80px" backgroundColor="#f3f2ef" zIndex="1">
         <Button
-          onClick={() => trendingBtn("trending")}
+          onClick={() => trendingBtn("sortByTrending")}
           as="h4"
           size="md"
           variant="outline"
           colorScheme="teal"
           cursor="pointer"
-          
           >
           Trending
         </Button>
         <Button
-          onClick={() => sortByDateBtn("date")}
+          onClick={() => sortByDateBtn("sortByDate")}
           as="h4"
           size="md"
           variant="outline"

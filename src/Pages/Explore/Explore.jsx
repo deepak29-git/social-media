@@ -1,20 +1,20 @@
 import { Box,Image } from "@chakra-ui/react";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
-import { usePost } from "../../Context/post-context";
 import { PostCard } from "../../Components/PostCard/PostCard";
 import { RightSidebar } from "../../Components/RightSidebar/RightSidebar";
 import { useEffect, useState } from "react";
 import { getPost } from "../../all-api/post-api";
 import { useLoader } from "../../Custom-hook/loader";
 import loading from '../../assets/gif/loading.gif'
-import { useUser } from "../../Context/user-context";
+import { useDispatch, useSelector } from "react-redux";
 export const Explore = () => {
-    const {postState:{createPost},postDispatch}=usePost();
-    const {userState:{followUser}}=useUser()
+    const dispatch=useDispatch()
+    const {createPost}=useSelector((state)=>state.posts)
+    const {followUser}=useSelector((state)=>state.user)
     const {loader,setLoader}=useLoader()
     const [filteredPost,setFilteredPost]=useState([])
     useEffect(() => {
-        getPost(postDispatch,setLoader);
+        getPost(dispatch,setLoader);
       }, []);
       
       useEffect(()=>{

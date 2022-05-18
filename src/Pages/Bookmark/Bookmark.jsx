@@ -1,16 +1,16 @@
 import { Box } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { getBookmark } from "../../all-api/bookmark";
+import { useDispatch, useSelector } from "react-redux";
+import { getBookmarkApi } from "../../all-api/bookmark";
 import { PostCard } from "../../Components/PostCard/PostCard";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
-import { usePost } from "../../Context/post-context";
 
 export const Bookmark = () => {
-  const { postState, postDispatch } = usePost();
-  const { bookmarkPost } = postState;
+  const dispatch = useDispatch();
+  const { bookmarkPost } = useSelector((state) => state.posts);
 
   useEffect(() => {
-    getBookmark(postDispatch);
+    getBookmarkApi(dispatch);
   }, []);
 
   return (

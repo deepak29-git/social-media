@@ -1,36 +1,37 @@
 import axios from "axios";
 import { getToken } from "../Utility/get-token";
+import { userData } from "../redux/features/auth/authSlice";
+import { getAllUserData,getUserData } from "../redux/features/user/userSlice";
 
-const getAllUser = async (userDispatch) => {
+const getAllUser = async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/users`);
-    userDispatch({ type: "GET_ALL_USER", payload: data.users });
+    dispatch(getAllUserData(data.users))
   } catch (error) {
     console.log(error);
   }
 };
 
-const getUser = async (id, userDispatch) => {
-  console.log(id,"getuer")
+const getUser = async (id, dispatch) => {
   try {
     const { data } = await axios.get(`/api/users/${id}`);
-    userDispatch({ type: "GET_USER", payload: data.user });
+    dispatch(getUserData(data.user))
   } catch (error) {
     console.log(error);
   }
 };
 
-const editProfileApi = async (userData, setUser) => {
+const editProfileApi = async (userDetail, dispatch) => {
   try {
     const { data } = await axios({
       method: "POST",
       url: "/api/users/edit",
       data: {
-        userData,
+        userData:userDetail,
       },
       headers: { authorization: getToken() },
     });
-    setUser(data.user)
+    dispatch(userData(data.user))
   } catch (error) {
     console.log(error);
   }

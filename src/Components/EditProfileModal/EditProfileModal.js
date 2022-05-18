@@ -11,29 +11,21 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { editProfileApi } from "../../all-api/user-api";
-import { useAuth } from "../../Context/auth-context";
-import { useUser } from "../../Context/user-context";
+import { uploadImage,getUserData } from "../../redux/features/user/userSlice";
 export const EditProfileModal = ({ isOpen, onClose }) => {
-  const {
-    userDispatch,
-    userState: { user },
-  } = useUser();
-  const { setUser } = useAuth();
-
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
-    userDispatch({ type: "GET_USER", payload: { ...user, [name]: value } });
+    dispatch(getUserData({ ...user, [name]: value }));
   };
 
-  const onImageChangeHandler=(e)=>{
-    if (e.target.files && e.target.files[0]) {
+  const onImageChangeHandler = (e) => {
       let img = e.target.files[0];
-        userDispatch({type:"UPLOAD_IMAGE",payload:URL.createObjectURL(img)})
-    }
-  }
-
+      dispatch(uploadImage(URL.createObjectURL(img)));
+  };
 
   return (
     <>
@@ -45,10 +37,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Upload profile</FormLabel>
-              <Input
-                type="file"
-                onChange={onImageChangeHandler}
-              />
+              <Input type="file" onChange={onImageChangeHandler} />
             </FormControl>
 
             <FormControl>
@@ -108,7 +97,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
               colorScheme="teal"
               mr={3}
               onClick={() => {
-                editProfileApi(user, setUser);
+                editProfileApi(user, dispatch);
                 onClose();
               }}
             >

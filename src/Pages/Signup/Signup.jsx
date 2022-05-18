@@ -14,12 +14,11 @@ import landing from "../../assets/svg/landing.svg";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../Context/auth-context";
-
+import { useDispatch } from "react-redux";
+import { signupBtn } from "../../redux/features/auth/authSlice";
 
 export const Signup = () => {
   const [show, setShow] = useState(false);
-  const { setIsAuth } = useAuth();
   const toast = useToast()
   const [user, setUser] = useState({
     firstName: "",
@@ -28,6 +27,7 @@ export const Signup = () => {
     password: "",
   });
   const navigate = useNavigate();
+  const dispatch=useDispatch()
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -54,7 +54,7 @@ export const Signup = () => {
         },
       });
       localStorage.setItem("token", data.encodedToken);
-      setIsAuth(true);
+      dispatch(signupBtn())
       navigate("/");
       toast({
         title: 'Singup Successfully.',
