@@ -4,18 +4,21 @@ import {getUser } from "../../all-api/user-api";
 import { EditProfileModal } from "../../Components/EditProfileModal/EditProfileModal";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import { NavLink } from "react-router-dom";
+import {RightSidebar} from '../../Components/RightSidebar/RightSidebar'
 import { useDispatch, useSelector } from "react-redux";
 export const Profile = () => {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const followUser=useSelector((state)=>state.user.followUser)
   const profileImage=useSelector((state)=>state.user.uploadImage)
   const {user}=useSelector((state)=>state.auth)
   const dispatch=useDispatch()
-  const {_id, firstName, lastName, userName, bio,portfolio}=user;
+  const {_id, firstName, lastName, userName, bio,portfolio,uploadImage}=user;
+
   return (
     <Box className="grid-container">
       <Sidebar />
-      <Box mt={110} gridColumn="2 / 3" gridGap={10}>
+      <Box mt={110} gridColumn="2 / 3">
         <EditProfileModal isOpen={isOpen} onClose={onClose} />
 
         <Flex
@@ -25,7 +28,7 @@ export const Profile = () => {
           gap="1rem"
           alignItems="center"
         >
-          <Avatar size='2xl' src={ profileImage} alt="not fount"/>
+          <Avatar size='2xl' src={ profileImage || uploadImage} alt="profilePicure"/>
           <Box>
             <Heading as="h4" size="md">
               {firstName} {lastName}
@@ -40,7 +43,9 @@ export const Profile = () => {
                     {followUser?.following?.length || 0}
                     
                   </Heading>{" "}
+              <Link>
                   Following
+              </Link>
                 </Box>
               </NavLink>
               <NavLink to="/followers">
@@ -48,7 +53,9 @@ export const Profile = () => {
                   <Heading as="span" size="sm">
                   {followUser?.followers?.length || 0}
                   </Heading>{" "}
+                  <Link>
                   Followers
+                  </Link>
                 </Box>
               </NavLink>
             </Box>
@@ -66,6 +73,7 @@ export const Profile = () => {
           </Button>
         </Flex>
       </Box>
+      <RightSidebar/>
     </Box>
   );
 };

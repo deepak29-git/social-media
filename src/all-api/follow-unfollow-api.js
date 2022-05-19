@@ -23,7 +23,6 @@ const unfollowUserApi = async (followUserId, dispatch) => {
       data: {},
       headers: { authorization: getToken() },
     });
-    // userDispatch({ type: "UNFOLLOW_USER", payload: data.user });
     dispatch(unfollowUser(data.user))
   } catch (error) {
     console.log(error);

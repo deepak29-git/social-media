@@ -1,6 +1,9 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex,Heading } from "@chakra-ui/react";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
+import { useDispatch, useSelector } from "react-redux";
 export const Followers = () => {
+  const { followUser } = useSelector((state) => state.user);
+  console.log(followUser,"followuser")
   return (
     <Box className="grid-container">
       <Sidebar />
@@ -11,7 +14,7 @@ export const Followers = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          followers
+         <Heading as="h4" size="md">followers ({followUser.followers.length})</Heading>
         </Flex>
       </Box>
     </Box>

@@ -5,6 +5,7 @@ const initialState = {
   user: {},
   followUser: {},
   uploadImage: "",
+  followUserName:""
 };
 export const userSlice = createSlice({
   name: "user",
@@ -25,6 +26,9 @@ export const userSlice = createSlice({
     uploadImage: (state, action) => {
       state.uploadImage = action.payload;
     },
+    followUserName:(state,action)=>{
+      state.followUserName=action.payload
+    }
   },
 });
 export const {
@@ -33,5 +37,6 @@ export const {
   followUser,
   unfollowUser,
   uploadImage,
+  followUserName
 } = userSlice.actions;
 export default userSlice.reducer;

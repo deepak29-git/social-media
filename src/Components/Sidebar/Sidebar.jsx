@@ -12,13 +12,9 @@ import {
 import "../Sidebar/Sidebar.css";
 import {
   AiOutlineHome,
-  AiOutlineMessage,
   MdOutlineExplore,
-  IoIosNotificationsOutline,
   BsBookmark,
-  BsCardList,
   CgProfile,
-  FiMoreHorizontal,
 } from "../import-icon";
 import { PostModal } from "../PostModal/PostModal";
 import { NavLink } from "react-router-dom";
@@ -31,58 +27,40 @@ export const Sidebar = () => {
     },
   };
   const theme = extendTheme(borderRadius);
+   
 
   return (
     <>
       <PostModal onClose={onClose} isOpen={isOpen} />
       <List className="list-container">
         <UnorderedList className="unordered-list">
-          <NavLink to="/">
+          <NavLink to="/"  style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
             <ListItem className="list-item">
               <Icon as={AiOutlineHome} w={6} h={6} />
               <Heading size="md">Home</Heading>
             </ListItem>
           </NavLink>
 
-          <NavLink to="/explore">
+          <NavLink to="/explore" style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
           <ListItem className="list-item">
             <Icon as={MdOutlineExplore} w={6} h={6} />
             <Heading size="md">Explore</Heading>
           </ListItem>
           </NavLink>
 
-          <ListItem className="list-item">
-            <Icon as={IoIosNotificationsOutline} w={6} h={6} />
-            <Heading size="md">Notification</Heading>
-          </ListItem>
-
-          <ListItem className="list-item">
-            <Icon as={AiOutlineMessage} w={6} h={6} />
-            <Heading size="md">Message</Heading>
-          </ListItem>
-
-          <NavLink to="/bookmark">
+          <NavLink to="/bookmark" style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
             <ListItem className="list-item">
               <Icon as={BsBookmark} w={6} h={6} />
               <Heading size="md">Bookmarks</Heading>
             </ListItem>
           </NavLink>
 
-          <ListItem className="list-item">
-            <Icon as={BsCardList} w={6} h={6} />
-            <Heading size="md">Lists</Heading>
-          </ListItem>
-          <NavLink to="/profile">
+          <NavLink to="/profile" style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
           <ListItem className="list-item">
             <Icon as={CgProfile} w={6} h={6} />
             <Heading size="md">Profile</Heading>
           </ListItem>
           </NavLink>
-
-          <ListItem className="list-item">
-            <Icon as={FiMoreHorizontal} w={6} h={6} />
-            <Heading size="md">More</Heading>
-          </ListItem>
 
           <Button
             onClick={onOpen}

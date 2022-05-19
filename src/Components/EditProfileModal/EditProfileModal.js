@@ -17,15 +17,20 @@ import { uploadImage,getUserData } from "../../redux/features/user/userSlice";
 export const EditProfileModal = ({ isOpen, onClose }) => {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+ 
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     dispatch(getUserData({ ...user, [name]: value }));
   };
+  console.log(user,"from edit")
 
   const onImageChangeHandler = (e) => {
       let img = e.target.files[0];
       dispatch(uploadImage(URL.createObjectURL(img)));
   };
+
+
 
   return (
     <>

@@ -31,14 +31,16 @@ import {
 } from "../../all-api/comment-api";
 import { EditCommentModal } from "../CommentModal/EditCommentModal";
 import { useDispatch, useSelector } from "react-redux";
-import {getId,getCommentId} from '../../redux/features/posts/postSlice'
+import { getId, getCommentId } from "../../redux/features/posts/postSlice";
 export const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const { bookmarkPost } = useSelector((state) => state.posts);
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditPost,setShowEditPost]=useState(false)
   const { onClose, isOpen, onOpen } = useDisclosure();
   const toast = useToast();
-  const { _id, content, likes, username } = post;
+  const { _id, content, likes, username, userProfile } = post;
   const [comments, setComments] = useState([]);
   const postId = _id;
   useEffect(() => {
@@ -47,30 +49,37 @@ export const PostCard = ({ post }) => {
 
   return (
     <Box className="post-container">
-      <Box className="post-content" p={4}>
-        <Box as="h4">{username}</Box>
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<BsThreeDots />}
-            variant="outline"
-          />
-          <MenuList>
-            <MenuItem
-              onClick={() => {
-                onOpen();
-                dispatch(getId(_id));
-              }}
-            >
-              Edit post
-            </MenuItem>
-            <EditPostModal onClose={onClose} isOpen={isOpen} />
-            <MenuItem onClick={() => deletePostApi(_id, dispatch)}>
-              Delete post
-            </MenuItem>
-          </MenuList>
-        </Menu>
+      <Box className="post-content" gap="4" p={4}>
+        <Avatar name="Dan Abrahmov" src={userProfile} />
+        <Heading as="h3" size="md">
+          {username}
+        </Heading>
+        <Box marginLeft="auto">
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"  
+              icon={<BsThreeDots />}
+              variant="outline"
+            />
+            <MenuList>
+              <MenuItem
+                onClick={() => {
+                  setShowEditPost(true)
+                  onOpen();
+                  dispatch(getId(_id));
+                  setShowModal(false)
+                }}
+              >
+                Edit post
+              </MenuItem>
+              {showEditPost&&<EditPostModal onClose={onClose} isOpen={isOpen} />}
+              <MenuItem onClick={() => deletePostApi(_id, dispatch)}>
+                Delete post
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Box>
       </Box>
       <Box as="hr"></Box>
       <Box p={4} as="p">
@@ -111,9 +120,13 @@ export const PostCard = ({ post }) => {
             onOpen();
             setShowModal(true);
             dispatch(getId(_id));
+            setShowEditModal(false);
+            
           }}
         >
-          <Box className="material-icons-outlined">comment </Box>
+          <Box as="span" className="material-icons-outlined">
+            comment{" "}
+          </Box>
           <Box as="span">Comment</Box>
         </Flex>
         {showModal && (
@@ -151,6 +164,7 @@ export const PostCard = ({ post }) => {
           gap={4}
           backgroundColor="#e2e8f0"
           p={4}
+          mb="5"
           alignItems="center"
         >
           <Avatar src="https://bit.ly/broken-link" />
@@ -201,15 +215,18 @@ export const PostCard = ({ post }) => {
                   onClick={() => {
                     onOpen();
                     dispatch(getCommentId(_id));
+                    setShowEditModal(true);
                   }}
                 >
                   Edit
                 </MenuItem>
-                <EditCommentModal
-                  onClose={onClose}
-                  isOpen={isOpen}
-                  setComments={setComments}
-                />
+                {showEditModal && (
+                  <EditCommentModal
+                    onClose={onClose}
+                    isOpen={isOpen}
+                    setComments={setComments}
+                  />
+                )}
                 <MenuItem
                   onClick={() => deleteCommentApi(_id, postId, setComments)}
                 >

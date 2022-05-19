@@ -6,7 +6,7 @@ import {
   ModalCloseButton,
   ModalBody,
   FormControl,
-  Input,
+  Textarea,
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
@@ -39,10 +39,12 @@ export const PostModal = ({ isOpen, onClose }) => {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
-            <Input
+            <Textarea
               onChange={(e) => dispatch(postInputValue(e.target.value))}
               ref={initialRef}
+              value={postInput}
               placeholder="What do you want to talk about?"
+              height="200"
             />
           </FormControl>
         </ModalBody>

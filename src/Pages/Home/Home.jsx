@@ -22,9 +22,12 @@ export const Home = () => {
   const sortByDateBtn=(action)=>{
     if(action==="sortByDate"){
       const sortedPostByDate=[...createPost].sort((a,b)=>b.createdAt.slice(7,10).split("-").join("")-a.createdAt.slice(7,10).split("-").join(""))
-      const sortedPostByTime=[...createPost].sort((a,b)=>b.createdAt.slice(14,16).split(":").join("")-a.createdAt.slice(14,16).split(":").join(""))
-      dispatch( getCreatePost (sortedPostByDate));  
-      dispatch( getCreatePost (sortedPostByTime));  
+      const sortedPostByMin=[...createPost].sort((a,b)=>b.createdAt.slice(14,16).split(":").join("")-a.createdAt.slice(14,16).split(":").join(""))
+      const sortedPostBySec=[...createPost].sort((a,b)=>b.createdAt.slice(16,19).split(":").join("")-a.createdAt.slice(16,19).split(":").join(""))
+      dispatch( getCreatePost (sortedPostByDate)) 
+      dispatch( getCreatePost (sortedPostByMin));  
+      dispatch( getCreatePost (sortedPostBySec));  
+
     }else {
       dispatch( getCreatePost (createPost) );  
     }
@@ -43,8 +46,8 @@ export const Home = () => {
   return (
     <Box className="grid-container">
       <Sidebar />
-      <Box mt={110} gridColumn="2 / 3" gridGap={10} >
-        <Box display="flex" gap="4" mb={4} position="sticky" top="80px" backgroundColor="#f3f2ef" zIndex="1">
+      <Box mt={110} gridColumn="2 / 3" >
+        <Box display="flex" py={4} gap="4" mb={4} position="sticky" top="80px" backgroundColor="#f3f2ef" zIndex="1">
         <Button
           onClick={() => trendingBtn("sortByTrending")}
           as="h4"

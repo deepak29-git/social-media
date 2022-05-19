@@ -9,22 +9,22 @@
 .grid-container {
   display: grid;
   grid-template-columns: 300px 1fr 300px;
-  grid-gap: 40px;
+  grid-gap: 20px;
 }
 
 .right-sidebar-container {
   border-radius: 10px;
-  height: 250px;
-  width: 300px;
+  width: max-content;
+  width: 280px;
   position: fixed;
-  right: 0;
+  right: 1rem;
   margin-top: 7rem;
+  padding-bottom: 1rem;
   background-color: var(--white-color);
 }
 
 .post-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 .post-icon {

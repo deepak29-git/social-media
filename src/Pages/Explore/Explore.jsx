@@ -20,7 +20,7 @@ export const Explore = () => {
       useEffect(()=>{
         const exploreFeedPost=createPost.filter(post=>post.username!==followUser.userName)
         setFilteredPost(exploreFeedPost)
-      },[])
+      },[filteredPost])
 
   return (
     <Box className="grid-container">
