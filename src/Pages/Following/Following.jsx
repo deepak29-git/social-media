@@ -12,7 +12,6 @@ export const Following = () => {
       <Sidebar />
       <Box mt={110} gridColumn="2 / 3" gridGap={10}>
         <Flex className="post-container" p={4} flexDirection="column">
-          {}
           <Heading as="h4" size="md">
             Following ({followUser?.following?.length || 0})
           </Heading>

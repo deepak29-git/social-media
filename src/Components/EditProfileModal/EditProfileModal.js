@@ -23,7 +23,6 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
     const { name, value } = e.target;
     dispatch(getUserData({ ...user, [name]: value }));
   };
-  console.log(user,"from edit")
 
   const onImageChangeHandler = (e) => {
       let img = e.target.files[0];

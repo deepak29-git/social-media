@@ -1,6 +1,8 @@
 import { Box, Button,Heading,Avatar } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink} from 'react-router-dom'
+import "../RightSidebar/RightSidebar.css"
 import {
   followUserApi,
   unfollowUserApi,
@@ -21,15 +23,20 @@ export const RightSidebar = () => {
     const filteredUser=users.filter(userData=>userData.firstName!==user.firstName)
     setShowUser(filteredUser)
   },[users])
+
   return (
     <Box className="right-sidebar-container" p={4} >
       <Heading as="h4" size="md">Who to follow</Heading>
-      {showUser.map(({ _id, firstName, lastName,userProfile }) => (
-        <Box key={_id} as="h4" mt={4} display="flex" justifyContent="space-between" alignItems="center" cursor="pointer">
-          <Avatar name="Dan Abrahmov" src={userProfile} />
+      {showUser.map(({ _id, firstName, lastName,uploadImage,username }) => (
+        <Box key={_id} className="user-profile" as="h4" mt={4} display="flex" justifyContent="space-between" alignItems="center" cursor="pointer">
+          <NavLink to={`/${username}`} >
+            <Box display="flex" alignItems="center" gap={2}>
+          <Avatar name="Dan Abrahmov" src={uploadImage} />
           <Box as="p">
             {firstName} {lastName}
           </Box>
+            </Box>
+          </NavLink>
           {followUser?.following?.find((user) => user._id === _id) ? (
             <Button
               onClick={() => unfollowUserApi(_id, dispatch)}
@@ -45,6 +52,7 @@ export const RightSidebar = () => {
               Follow
             </Button>
           )}
+          
         </Box>
       ))}
     </Box>

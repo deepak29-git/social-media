@@ -18,9 +18,11 @@ import {
 } from "../import-icon";
 import { PostModal } from "../PostModal/PostModal";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 export const Sidebar = () => {
   const { onOpen, onClose, isOpen } = useDisclosure();
-
+  const {user}=useSelector(state=>state.auth)
+  const {userName}=user;
   const borderRadius = {
     radii: {
       full: "9999px",
@@ -55,7 +57,7 @@ export const Sidebar = () => {
             </ListItem>
           </NavLink>
 
-          <NavLink to="/profile" style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
+          <NavLink to={`/profile/${userName}`} style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
           <ListItem className="list-item">
             <Icon as={CgProfile} w={6} h={6} />
             <Heading size="md">Profile</Heading>

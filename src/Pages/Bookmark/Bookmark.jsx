@@ -11,7 +11,7 @@ export const Bookmark = () => {
 
   useEffect(() => {
     getBookmarkApi(dispatch);
-  }, []);
+  }, [bookmarkPost]);
 
 
   return (

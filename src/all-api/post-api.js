@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "../Utility/get-token";
-import {getPosts,getCreatePost,editPost,deletePost} from '../redux/features/posts/postSlice'
+import {getPosts,getCreatePost,editPost,deletePost, postInputValue} from '../redux/features/posts/postSlice'
 const getPost = async (dispatch, setLoader) => {
   try {
     setLoader(true);
@@ -49,13 +49,18 @@ const editPostApi = async (dispatch, _id, postData) => {
 };
 
 const deletePostApi = async (id, dispatch) => {
-  const { data } = await axios({
-    method: "DELETE",
-    url: `/api/posts/${id}`,
-    headers: { authorization: getToken() },
-  });
-
-  dispatch(deletePost(data.posts));
+  try{
+    const { data } = await axios({
+      method: "DELETE",
+      url: `/api/posts/${id}`,
+      headers: { authorization: getToken() },
+    });
+  
+    dispatch(deletePost(data.posts));
+  }catch(error){
+    console.log(error)
+  }
+  
 };
 
 export { getPost, createPostApi, editPostApi, deletePostApi };

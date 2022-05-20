@@ -126,17 +126,8 @@ export const editPostHandler = function (schema, request) {
     const postId = request.params.postId;
     const {postData}  = JSON.parse(request.requestBody);
     let post = schema.posts.findBy({ _id: postId }).attrs;
-    if (post.username !== user.username) {
-      return new Response(
-        400,
-        {},
-        {
-          errors: ["Cannot edit a Post doesn't belong to the logged in User."],
-        }
-      );
-    }
+
     post = { ...post, content:postData };
-    // post = { ...post, ...postData };`
     this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
@@ -157,6 +148,7 @@ export const editPostHandler = function (schema, request) {
 
 export const likePostHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
+
   try {
     if (!user) {
       return new Response(
@@ -182,8 +174,7 @@ export const likePostHandler = function (schema, request) {
       (currUser) => currUser._id !== user._id
     );
     post.likes.likeCount += 1;
-    // post.likes.likedBy.push(user);
-    post.likes.likedBy.push({ ...user, bookmarks: "" });
+    post.likes.likedBy.push({...user,bookmarks:"" });
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
@@ -236,7 +227,7 @@ export const dislikePostHandler = function (schema, request) {
     const updatedLikedBy = post.likes.likedBy.filter(
       (currUser) => currUser._id !== user._id
     );
-    post.likes.dislikedBy.push(user);
+    post.likes.dislikedBy.push({...user,bookmarks:"" });
     post = { ...post, likes: { ...post.likes, likedBy: updatedLikedBy } };
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });
@@ -271,17 +262,7 @@ export const deletePostHandler = function (schema, request) {
     }
     const postId = request.params.postId;
     let post = schema.posts.findBy({ _id: postId }).attrs;
-    if (post.username !== user.username) {
-      return new Response(
-        400,
-        {},
-        {
-          errors: [
-            "Cannot delete a Post doesn't belong to the logged in User.",
-          ],
-        }
-      );
-    }
+   
     this.db.posts.remove({ _id: postId });
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {

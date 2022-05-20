@@ -18,10 +18,10 @@ export const UnfollowModal=({isOpen,onClose,_id})=>{
     <>
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent>
-        <ModalHeader>Unfollow {followUserName}</ModalHeader>
+        <ModalHeader>Unfollow @{followUserName}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-            <Box>Do you want to unfollow <Box as="span" fontWeight="bold">{followUserName}</Box></Box>
+            <Box>Do you want to unfollow <Box as="span" fontWeight="bold">@{followUserName}</Box></Box>
         </ModalBody>
         <ModalFooter>
           <Button onClick={()=>{
