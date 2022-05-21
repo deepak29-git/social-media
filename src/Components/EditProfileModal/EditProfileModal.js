@@ -29,6 +29,17 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
       dispatch(uploadImage(URL.createObjectURL(img)));
   };
 
+  const userObj={
+    firstName: "Deepak",
+    lastName: "Goyal",
+    userName: "deepak_1996",
+    portfolio: "https://deepak-portfolio-react.netlify.app/",
+    uploadImage:"https://media-exp1.licdn.com/dms/image/C5603AQEXgNHSGntBWg/profile-displayphoto-shrink_800_800/0/1631095585980?e=1658361600&v=beta&t=83NvcwpXLLz2ECrV8F2Os7UEhMdS7nIjfxrteRqQceY",
+    bio: "aspring full stack develper",
+  }
+
+  const {firstName,lastName,userName,portfolio,bio}=userObj
+
 
 
   return (
@@ -51,7 +62,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
                 autoFocus
                 onChange={(e) => onChangeHandler(e)}
                 placeholder="First name"
-                defaultValue={user.firstName}
+                defaultValue={user.firstName || firstName}
               />
             </FormControl>
 
@@ -61,7 +72,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
                 name="lastName"
                 onChange={(e) => onChangeHandler(e)}
                 placeholder="Last name"
-                defaultValue={user.lastName}
+                defaultValue={user.lastName || lastName}
               />
             </FormControl>
 
@@ -71,7 +82,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
                 name="userName"
                 onChange={(e) => onChangeHandler(e)}
                 placeholder="User name"
-                defaultValue={user.userName}
+                defaultValue={user.userName || userName}
               />
             </FormControl>
 
@@ -81,7 +92,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
                 name="bio"
                 onChange={(e) => onChangeHandler(e)}
                 placeholder="Bio"
-                defaultValue={user.bio}
+                defaultValue={user.bio || bio}
               />
             </FormControl>
 
@@ -91,7 +102,7 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
                 name="portfolio"
                 onChange={(e) => onChangeHandler(e)}
                 placeholder="Portfolio link"
-                defaultValue={user.portfolio}
+                defaultValue={user.portfolio || portfolio}
               />
             </FormControl>
           </ModalBody>

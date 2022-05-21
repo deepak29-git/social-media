@@ -18,9 +18,11 @@ import {
 } from "../import-icon";
 import { PostModal } from "../PostModal/PostModal";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { postInputValue } from "../../redux/features/posts/postSlice";
 export const Sidebar = () => {
   const { onOpen, onClose, isOpen } = useDisclosure();
+  const dispatch=useDispatch()
   const {user}=useSelector(state=>state.auth)
   const {userName}=user;
   const borderRadius = {
@@ -65,7 +67,10 @@ export const Sidebar = () => {
           </NavLink>
 
           <Button
-            onClick={onOpen}
+            onClick={()=>{
+              onOpen()
+              dispatch(postInputValue(""))
+            }}
             borderRadius={theme.radii.full}
             colorScheme="teal"
           >

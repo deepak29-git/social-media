@@ -24,6 +24,7 @@ export const PostModal = ({ isOpen, onClose }) => {
   const postHandler = () => {
     createPostApi(dispatch, postInput,user);
     onClose();
+    dispatch(postInputValue(""))
   };
 
   return (
@@ -36,7 +37,7 @@ export const PostModal = ({ isOpen, onClose }) => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Create Post</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton onClick={()=>dispatch(postInputValue(""))}/>
         <ModalBody pb={6}>
           <FormControl>
             <Textarea

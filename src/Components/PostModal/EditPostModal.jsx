@@ -10,20 +10,27 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editPostApi } from "../../all-api/post-api";
 import {postInputValue} from '../../redux/features/posts/postSlice'
 export const EditPostModal = ({ isOpen, onClose }) => {
   const  dispatch  = useDispatch();
   
-  const {id,postInput}=useSelector((state)=>state.posts)
+  const {id,postInput,content}=useSelector((state)=>state.posts)
   const initialRef = useRef();
   const finalRef = useRef();
 
+  
   const editChangeHandler = (e) => {
     dispatch(postInputValue(e.target.value));
+    
   };
+
+
+  useEffect(()=>{
+    dispatch(postInputValue(content))
+  },[content])
 
   return (
     <Modal
@@ -54,6 +61,7 @@ export const EditPostModal = ({ isOpen, onClose }) => {
             onClick={() => {
               editPostApi(dispatch, id, postInput);
               onClose();
+              dispatch(postInputValue(""))
             }}
             colorScheme="teal"
             mr={3}

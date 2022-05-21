@@ -31,7 +31,7 @@ import {
 } from "../../all-api/comment-api";
 import { EditCommentModal } from "../CommentModal/EditCommentModal";
 import { useDispatch, useSelector } from "react-redux";
-import { getId, getCommentId } from "../../redux/features/posts/postSlice";
+import { getId, getCommentId,getContent,getCommentContent } from "../../redux/features/posts/postSlice";
 export const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const { bookmarkPost } = useSelector((state) => state.posts);
@@ -68,7 +68,9 @@ export const PostCard = ({ post }) => {
                   setShowEditPost(true)
                   onOpen();
                   dispatch(getId(_id));
+                  dispatch(getContent(content))
                   setShowModal(false)
+                  setShowEditModal(false)
                 }}
               >
                 Edit post
@@ -121,7 +123,7 @@ export const PostCard = ({ post }) => {
             setShowModal(true);
             dispatch(getId(_id));
             setShowEditModal(false);
-            
+            setShowEditPost(false)
           }}
         >
           <Box as="span" className="material-icons-outlined">
@@ -216,6 +218,8 @@ export const PostCard = ({ post }) => {
                     onOpen();
                     dispatch(getCommentId(_id));
                     setShowEditModal(true);
+                    dispatch(getCommentContent(content))
+                    setShowEditPost(false)
                   }}
                 >
                   Edit

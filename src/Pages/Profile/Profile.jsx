@@ -11,9 +11,10 @@ export const Profile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const followUser=useSelector((state)=>state.user.followUser)
   const profileImage=useSelector((state)=>state.user.uploadImage)
-  const {user}=useSelector((state)=>state.auth)
+  const userData=useSelector((state)=>state.auth.user)
+  const { user } = useSelector((state) => state.user);
   const dispatch=useDispatch()
-  const {_id, firstName, lastName, userName, bio,portfolio,uploadImage}=user;
+  const {_id, firstName, lastName, userName, bio,portfolio,uploadImage}=userData;
 
   return (
     <Box className="grid-container">
@@ -64,7 +65,7 @@ export const Profile = () => {
             marginLeft="auto"
             onClick={() => {
               onOpen();
-              getUser(_id, dispatch);
+              getUser(_id, dispatch,user);
             }}
             colorScheme="teal"
             variant="outline"

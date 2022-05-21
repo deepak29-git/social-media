@@ -8,6 +8,8 @@ const initialState = {
   commentInput: "",
   editCommentInput: "",
   commentId: "",
+  content:"",
+  commentContent:""
 };
 
 export const postSlice = createSlice({
@@ -53,6 +55,12 @@ export const postSlice = createSlice({
     getCommentId: (state, action) => {
       state.commentId = action.payload;
     },
+    getContent:(state,action)=>{
+      state.content=action.payload
+    },
+    getCommentContent:(state,action)=>{
+      state.commentContent=action.payload
+    }
   },
 });
 
@@ -69,6 +77,8 @@ export const {
   commentInputValue,
   postInputValue,
   getId,
+  getContent,
+  getCommentContent,
   getCommentId,
 } = postSlice.actions;
 export default postSlice.reducer;
