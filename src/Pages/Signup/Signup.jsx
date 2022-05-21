@@ -6,7 +6,8 @@ import {
   Input,
   Button,
   Heading,
-  useToast
+  useToast,
+  InputRightElement
 } from "@chakra-ui/react";
 
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -53,9 +54,9 @@ export const Signup = () => {
           password: password,
         },
       });
-      localStorage.setItem("token", data.encodedToken);
+      localStorage.setItem("signupToken", data.encodedToken);
       dispatch(signupBtn())
-      navigate("/");
+      navigate("/signin");
       toast({
         title: 'Singup Successfully.',
         status: 'success',
@@ -127,7 +128,9 @@ export const Signup = () => {
               top="0"
               fontSize="1.5rem"
             >
-              {show ? <ViewOffIcon /> : <ViewIcon />}
+               <InputRightElement width='3rem'>
+                <Button>{show ? <ViewOffIcon /> : <ViewIcon />}</Button>
+              </InputRightElement>
             </Box>
           </Box>
           <Button

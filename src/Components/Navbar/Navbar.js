@@ -2,14 +2,20 @@ import "../Navbar/Navbar.css";
 import { Button, Box, Heading, useToast } from "@chakra-ui/react";
 import { Link,useNavigate } from "react-router-dom";
 import {useSelector,useDispatch} from 'react-redux'
-import { logoutBtn } from "../../redux/features/auth/authSlice";
+import { logoutBtn,signupBtn } from "../../redux/features/auth/authSlice";
+import { useEffect } from "react";
 export const Navbar = () => {
   const auth=useSelector((state)=>state.auth.value)
   const {user}=useSelector((state)=>state.auth)
+  const {singupToken}=useSelector((state)=>state.auth)
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const toast=useToast()
   const {firstName}=user;
+  console.log(singupToken)
+  useEffect(()=>{
+    dispatch(signupBtn())
+  },[firstName])
   return (
     <Box px={10} py={4} className="nav-container">
       <Box display="flex" gap="5" alignItems="center" mb={4}>
@@ -22,7 +28,7 @@ export const Navbar = () => {
         </Box>
         {auth ? (
           <Box display="flex" justifyContent="flex-end" width="100%" gap="1rem" alignItems="center">
-            <Heading as="h4" size="md" color="teal">Hi, {firstName}</Heading>
+            {singupToken&&<Heading as="h4" size="md" color="teal">Hi, {firstName}</Heading>}
             <Button
               onClick={() => {
                 localStorage.removeItem("token");

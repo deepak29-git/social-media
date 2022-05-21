@@ -3,7 +3,6 @@ import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 export const Followers = () => {
   const { followUser } = useSelector((state) => state.user);
-  console.log(followUser,"followuser")
   return (
     <Box className="grid-container">
       <Sidebar />
@@ -14,7 +13,7 @@ export const Followers = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-         <Heading as="h4" size="md">followers ({followUser.followers.length})</Heading>
+         <Heading as="h4" size="md">followers ({followUser?.followers?.length || 0})</Heading>
         </Flex>
       </Box>
     </Box>

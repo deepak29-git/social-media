@@ -28,8 +28,8 @@ export const RightSidebar = () => {
     <Box className="right-sidebar-container" p={4} >
       <Heading as="h4" size="md">Who to follow</Heading>
       {showUser.map(({ _id, firstName, lastName,uploadImage,username }) => (
-        <Box key={_id} className="user-profile" as="h4" mt={4} display="flex" justifyContent="space-between" alignItems="center" cursor="pointer">
-          <NavLink to={`/${username}`} >
+        <Box key={_id}  as="h4" mt={4} display="flex" justifyContent="space-between" alignItems="center" cursor="pointer">
+          <NavLink to={`/${username}`} className="user-profile">
             <Box display="flex" alignItems="center" gap={2}>
           <Avatar name="Dan Abrahmov" src={uploadImage} />
           <Box as="p">

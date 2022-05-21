@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const initialState={
     value:localStorage.getItem("token")?true:false,
+    singupToken:localStorage.getItem("signupToken")?true:false,
     user:localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 }
 
@@ -18,7 +19,7 @@ export const authSlice=createSlice({
             state.value=false
         },
         signupBtn:(state)=>{
-            state.value=true
+            state.singupToken=true
         },
         userData:(state,action)=>{
             state.user=action.payload

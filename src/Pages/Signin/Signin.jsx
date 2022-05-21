@@ -8,6 +8,8 @@ import {
   Button,
   Heading,
   useToast,
+  InputRightElement,
+  InputGroup,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -21,10 +23,9 @@ export const SignIn = () => {
   const [show, setShow] = useState(false);
   const [showMsg, setShowMsg] = useState(false);
   const dispatch = useDispatch();
-;
   const toast = useToast();
   const [user, setUser] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export const SignIn = () => {
   };
 
   const signInHandler = async () => {
-    const { email, password } = user;
+    const { username, password } = user;
 
     if (password.length < 8) {
       setShowMsg(true);
@@ -46,7 +47,7 @@ export const SignIn = () => {
         method: "POST",
         url: "/api/auth/login",
         data: {
-          email: email,
+          username: username,
           password: password,
         },
       });
@@ -71,7 +72,7 @@ export const SignIn = () => {
         method: "POST",
         url: "/api/auth/login",
         data: {
-          email: "deepak123@gmail.com",
+          username: "deepak123@gmail.com",
           password: "deepak123",
         },
       });
@@ -102,37 +103,41 @@ export const SignIn = () => {
       <Box mt={110} width="30rem" px={2}>
         <Heading mb={8}>Welcome to your professional community</Heading>
         <FormControl>
-          <FormLabel htmlFor="email">Email address</FormLabel>
+          <FormLabel htmlFor="username">Username</FormLabel>
           <Input
             mb={2}
-            id="email"
-            name="email"
-            value={user.email}
+            id="username"
+            name="username"
+            value={user.username}
             onChange={onChangeHandler}
-            type="email"
-            placeholder="Enter your email"
+            type="username"
+            placeholder="Enter your username"
           />
-          {showMsg && <FormHelperText>Enter email</FormHelperText>}
+          {showMsg && <FormHelperText>Enter username</FormHelperText>}
           <FormLabel htmlFor="password">Password</FormLabel>
           <Box position="relative">
-            <Input
-              id="password"
-              name="password"
-              value={user.password}
-              onChange={onChangeHandler}
-              type={show ? "text" : "password"}
-              placeholder="Enter your password"
-            />
-            <Box
-              onClick={() => setShow(!show)}
-              cursor="pointer"
-              position="absolute"
-              right="10px"
-              top="0"
-              fontSize="1.5rem"
-            >
-              {show ? <ViewOffIcon /> : <ViewIcon />}
-            </Box>
+            <InputGroup size="md">
+              <Input
+                id="password"
+                name="password"
+                value={user.password}
+                onChange={onChangeHandler}
+                type={show ? "text" : "password"}
+                placeholder="Enter your password"
+              />
+              <Box
+                onClick={() => setShow(!show)}
+                cursor="pointer"
+                position="absolute"
+                right="10px"
+                top="0"
+                fontSize="1.5rem"
+              >
+                <InputRightElement width="3rem">
+                  <Button>{show ? <ViewOffIcon /> : <ViewIcon />}</Button>
+                </InputRightElement>
+              </Box>
+            </InputGroup>
           </Box>
           {showMsg && (
             <FormHelperText>
@@ -140,7 +145,7 @@ export const SignIn = () => {
             </FormHelperText>
           )}
           <Button
-            disabled={user.email && user.password ? false : true}
+            disabled={user.username && user.password ? false : true}
             onClick={signInHandler}
             colorScheme="teal"
             width="100%"
