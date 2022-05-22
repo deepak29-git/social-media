@@ -17,7 +17,7 @@ const createPostApi = async (dispatch, post, userData) => {
     const { data } = await axios({
       method: "POST",
       url: "/api/posts",
-      data: { postData: post, username: userData.userName },
+      data: { postData: post, username: userData.username },
       headers: {
         authorization: getToken(),
       },

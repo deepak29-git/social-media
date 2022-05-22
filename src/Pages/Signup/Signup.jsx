@@ -7,7 +7,7 @@ import {
   Button,
   Heading,
   useToast,
-  InputRightElement
+  InputRightElement,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -16,11 +16,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signupBtn } from "../../redux/features/auth/authSlice";
 
 export const Signup = () => {
   const [show, setShow] = useState(false);
-  const toast = useToast()
+  const toast = useToast();
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -28,7 +27,6 @@ export const Signup = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const dispatch=useDispatch()
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -36,13 +34,6 @@ export const Signup = () => {
 
   const signupHandler = async () => {
     const { firstName, lastName, userName, password } = user;
-    if (!firstName && !lastName && !userName && !password) {
-      alert("Enter all fields");
-    }
-    if (password.length < 8) {
-      alert("password should contain atleast 8 character");
-    }
-
     try {
       const { data } = await axios({
         method: "POST",
@@ -55,14 +46,14 @@ export const Signup = () => {
         },
       });
       localStorage.setItem("signupToken", data.encodedToken);
-      dispatch(signupBtn())
+   
       navigate("/signin");
       toast({
-        title: 'Singup Successfully.',
-        status: 'success',
+        title: "Singup Successfully.",
+        status: "success",
         duration: 3000,
         isClosable: true,
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -76,8 +67,8 @@ export const Signup = () => {
       alignItems="center"
       flexWrap="wrap"
     >
-      <Image mt={110}  boxSize="29rem" src={landing} alt="landing" />
-      <Box mt={110}  width="30rem" px={2}>
+      <Image mt={110} boxSize="29rem" src={landing} alt="landing" />
+      <Box mt={110} width="30rem" px={2}>
         <Heading mb={8}>Create your account</Heading>
         <FormControl>
           <FormLabel htmlFor="firstName">First name</FormLabel>
@@ -128,7 +119,7 @@ export const Signup = () => {
               top="0"
               fontSize="1.5rem"
             >
-               <InputRightElement width='3rem'>
+              <InputRightElement width="3rem">
                 <Button>{show ? <ViewOffIcon /> : <ViewIcon />}</Button>
               </InputRightElement>
             </Box>

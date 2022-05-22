@@ -18,7 +18,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signinBtn } from "../../redux/features/auth/authSlice";
+import { signinBtn, userData } from "../../redux/features/auth/authSlice";
 export const SignIn = () => {
   const [show, setShow] = useState(false);
   const [showMsg, setShowMsg] = useState(false);
@@ -37,11 +37,6 @@ export const SignIn = () => {
 
   const signInHandler = async () => {
     const { username, password } = user;
-
-    if (password.length < 8) {
-      setShowMsg(true);
-      return false;
-    }
     try {
       const { data } = await axios({
         method: "POST",
@@ -54,6 +49,7 @@ export const SignIn = () => {
       localStorage.setItem("token", data.encodedToken);
       localStorage.setItem("user", JSON.stringify(data.foundUser));
       dispatch(signinBtn());
+      dispatch(userData(data.foundUser))
       navigate("/");
       toast({
         title: "Logged In Successfully.",
@@ -72,7 +68,7 @@ export const SignIn = () => {
         method: "POST",
         url: "/api/auth/login",
         data: {
-          username: "deepak123@gmail.com",
+          username: "deepak_1996",
           password: "deepak123",
         },
       });
@@ -139,11 +135,6 @@ export const SignIn = () => {
               </Box>
             </InputGroup>
           </Box>
-          {showMsg && (
-            <FormHelperText>
-              password should contain atleast 8 character
-            </FormHelperText>
-          )}
           <Button
             disabled={user.username && user.password ? false : true}
             onClick={signInHandler}

@@ -21,7 +21,7 @@ export const Profile = () => {
   const userData = useSelector((state) => state.auth.user);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { _id, firstName, lastName, userName, bio, portfolio, uploadImage } =
+  const { _id, firstName, lastName, username, bio, portfolio, uploadImage } =
     userData;
 
   return (
@@ -46,7 +46,7 @@ export const Profile = () => {
             <Heading as="h4" size="md">
               {firstName} {lastName}
             </Heading>
-            <Box as="p">{userName}</Box>
+            <Box as="p">{username}</Box>
             <Box as="p">{bio}</Box>
             <Link href="https://deepak-portfolio-react.netlify.app/" isExternal>
               {portfolio} <ExternalLinkIcon mx="2px" />

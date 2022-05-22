@@ -24,8 +24,9 @@ export const SingleProfile = () => {
   const dispatch = useDispatch();
   const {onOpen,isOpen,onClose}=useDisclosure()
   const findData = users.find((user) => user?.username === username);
-  const { _id,firstName, lastName, userName, bio, uploadImage, portfolio } =
+  const { _id,firstName, lastName, bio, uploadImage, portfolio } =
     findData;
+
   return (
     <Box className="grid-container">
       <Sidebar />
@@ -36,7 +37,6 @@ export const SingleProfile = () => {
             <Heading as="h4" size="md">
               {firstName} {lastName}
             </Heading>
-            <Box as="p">{userName}</Box>
             <Box as="p">{bio}</Box>
             <Link href="https://deepak-portfolio-react.netlify.app/" isExternal>
               {portfolio} <ExternalLinkIcon mx="2px" />

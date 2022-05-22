@@ -14,10 +14,11 @@ const getComments = async (postId, setComments) => {
 };
 
 const addCommentApi = async (postId, commentInput, userData, setComments) => {
+  console.log(userData.username)
   try {
     const { data } = await axios.post(
       `/api/comments/add/${postId}`,
-      { content: commentInput, username: userData.userName },
+      { content: commentInput, username: userData.username },
       { headers: { authorization: getToken() } }
     );
     setComments(data.comments);

@@ -16,7 +16,8 @@ import { editProfileApi } from "../../all-api/user-api";
 import { uploadImage,getUserData } from "../../redux/features/user/userSlice";
 export const EditProfileModal = ({ isOpen, onClose }) => {
   const { user } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const userData=useSelector((state)=>state.auth.user)
+    const dispatch = useDispatch();
  
 
   const onChangeHandler = (e) => {
@@ -28,17 +29,10 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
       let img = e.target.files[0];
       dispatch(uploadImage(URL.createObjectURL(img)));
   };
+  
+ 
 
-  const userObj={
-    firstName: "Deepak",
-    lastName: "Goyal",
-    userName: "deepak_1996",
-    portfolio: "https://deepak-portfolio-react.netlify.app/",
-    uploadImage:"https://media-exp1.licdn.com/dms/image/C5603AQEXgNHSGntBWg/profile-displayphoto-shrink_800_800/0/1631095585980?e=1658361600&v=beta&t=83NvcwpXLLz2ECrV8F2Os7UEhMdS7nIjfxrteRqQceY",
-    bio: "aspring full stack develper",
-  }
-
-  const {firstName,lastName,userName,portfolio,bio}=userObj
+  const {firstName,lastName,username,portfolio,bio}=userData
 
 
 
@@ -79,10 +73,10 @@ export const EditProfileModal = ({ isOpen, onClose }) => {
             <FormControl mt={4}>
               <FormLabel>User name</FormLabel>
               <Input
-                name="userName"
+                name="username"
                 onChange={(e) => onChangeHandler(e)}
                 placeholder="User name"
-                defaultValue={user.userName || userName}
+                defaultValue={user.username || username}
               />
             </FormControl>
 
