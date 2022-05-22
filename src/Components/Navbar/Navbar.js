@@ -27,6 +27,8 @@ export const Navbar = () => {
             <Button
               onClick={() => {
                 localStorage.removeItem("token");
+                localStorage.removeItem("signupToken");
+                localStorage.removeItem("user");
                 dispatch(logoutBtn());
                 navigate('/signin')
                 toast({
