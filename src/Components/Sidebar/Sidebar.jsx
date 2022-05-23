@@ -24,7 +24,8 @@ export const Sidebar = () => {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const dispatch=useDispatch()
   const {user}=useSelector(state=>state.auth)
-  const {userName}=user;
+  const {username}=user;
+ 
   const borderRadius = {
     radii: {
       full: "9999px",
@@ -59,7 +60,7 @@ export const Sidebar = () => {
             </ListItem>
           </NavLink>
 
-          <NavLink to={`/profile/${userName}`} style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
+          <NavLink to={`/profile/${username}`} style={(({isActive})=>isActive?{color:"teal"}:undefined)}>
           <ListItem className="list-item">
             <Icon as={CgProfile} w={6} h={6} />
             <Heading size="md">Profile</Heading>
