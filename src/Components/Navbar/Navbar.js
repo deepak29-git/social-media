@@ -10,7 +10,7 @@ export const Navbar = () => {
   const toast=useToast()
   const {firstName}=user;
 
-
+ 
   return (
     <Box px={10} py={4} className="nav-container">
       <Box display="flex" gap="5" alignItems="center" mb={4}>

@@ -9,7 +9,6 @@ import loading from "../../assets/gif/loading.gif";
 import "../Home/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getCreatePost } from "../../redux/features/posts/postSlice";
-import { signupBtn } from "../../redux/features/auth/authSlice";
 export const Home = () => {
   const dispatch = useDispatch();
   const { createPost } = useSelector((state) => state.posts);
@@ -19,7 +18,6 @@ export const Home = () => {
     getPost(dispatch, setLoader);
   }, []);
 
-  
 
   const sortByDateBtn = (action) => {
     if (action === "sortByDate") {

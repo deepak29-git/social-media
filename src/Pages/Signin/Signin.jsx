@@ -75,6 +75,7 @@ export const SignIn = () => {
       localStorage.setItem("token", data.encodedToken);
       localStorage.setItem("user", JSON.stringify(data.foundUser));
       dispatch(signinBtn());
+      dispatch(userData(data.foundUser))
       navigate("/");
       toast({
         title: "Logged In Successfully.",
